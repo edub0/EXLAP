@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * EXLAP 1.3 - Core schema definition
+* Authors:
+* Jens Krueger, Volkswagen AG
+* Hans-Christian Fricke, Volkswagen AG
+* This work is licensed under the Creative Commons "Namensnennung-Weitergabe unter gleichen
+* Bedingungen 3.0 Deutschland License": http://creativecommons.org/licenses/by-sa/3.0/de/ 
+*
+* This XML schema defines the meta-data types that are used in defined a service interface profile like <Absolute/>, <Relative/>, etc.
+-->
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://exlap.de/v1/protocol" targetNamespace="http://exlap.de/v1/protocol" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="definitions.xsd"/>
+	<xs:element name="Object">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="basicInterfaceElementAttributes">
+					<xs:group ref="basicMembers" minOccurs="1" maxOccurs="unbounded"/>
+					<xs:attribute name="context" type="contextType" use="optional" default="global"/>
+					<xs:attribute name="characteristic" type="characteristicType" use="required"/> 
+					<xs:attribute name="interval" type="xs:nonNegativeInteger" use="optional" default="0"/>
+					<xs:attribute name="required" use="optional" default="false"/>
+				  </xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:unique name="objectNameUniqueness">
+				<xs:selector xpath="*"/>
+				<xs:field xpath="@name"/>
+			</xs:unique>
+		</xs:element>
+		<xs:element name="Function">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicInterfaceElementAttributes">
+						<xs:sequence>
+							<xs:element ref="In"/>
+							<xs:element ref="Out"/>
+						</xs:sequence>
+						<xs:attribute name="required" use="optional" default="false"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="Type">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicInterfaceElementAttributes">
+						<xs:group ref="basicMembers" minOccurs="1" maxOccurs="unbounded"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="In">
+			<xs:complexType>
+				<xs:group ref="basicMembers" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:complexType>
+			<xs:unique name="FunctionInNameUniqueness">
+				<xs:selector xpath="*"/>
+				<xs:field xpath="@name"/>
+			</xs:unique>
+		</xs:element>
+		<xs:element name="Out">
+			<xs:complexType>
+				<xs:group ref="basicMembers" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:complexType>
+			<xs:unique name="FunctionOutNameUniqueness">
+				<xs:selector xpath="*"/>
+				<xs:field xpath="@name"/>
+			</xs:unique>
+		</xs:element>
+		<xs:element name="Absolute">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes">
+						<xs:attribute name="unit" type="xs:string" use="required"/>
+						<xs:attribute name="min" type="xs:double" use="optional" default="-INF"/>
+						<xs:attribute name="max" type="xs:double" use="optional" default="INF"/>
+						<xs:attribute name="resolution" type="xs:double" use="optional" default="0"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="Activity">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes"/>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="Alternative">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes">
+						<xs:sequence>
+							<xs:element ref="Choice"/>
+							<xs:element ref="Choice" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="Choice">
+			<xs:complexType>
+				<xs:attribute name="typeRef" type="nameType" use="required"/>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="Binary">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes">
+						<xs:attribute name="contentType" type="xs:string" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="Enumeration">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes">
+						<xs:sequence>
+							<xs:element ref="Member"/>
+							<xs:element ref="Member" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:unique name="memberIdUniqueness">
+				<xs:selector xpath="Member"/>
+				<xs:field xpath="@id"/>
+			</xs:unique>
+		</xs:element>
+		<xs:element name="Member">
+			<xs:complexType>
+				<xs:attribute name="id" type="identifierType" use="required"/>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="Relative">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes">
+						<xs:attribute name="min" type="xs:double" use="required"/>
+						<xs:attribute name="max" type="xs:double" use="required"/>
+						<xs:attribute name="minLabel" type="identifierType" use="required"/>
+						<xs:attribute name="maxLabel" type="identifierType" use="required"/>
+						<xs:attribute name="resolution" type="xs:double" use="optional" default="0"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="Text">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes">
+						<xs:attribute name="regExp" type="xs:string" use="optional" default=".*"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="Time">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes">
+						<xs:attribute name="isLocalTime" type="xs:boolean" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="ListEntity">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes">
+						<xs:attribute name="typeRef" type="nameType" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="ObjectEntity">
+			<xs:complexType>
+				<xs:complexContent>
+					<xs:extension base="basicMemberAttributes">
+						<xs:attribute name="typeRef" type="nameType" use="required"/>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+		<xs:simpleType name="contextType">
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="global"/>
+				<xs:enumeration value="session"/>
+			</xs:restriction>
+		</xs:simpleType>
+		<xs:simpleType name="characteristicType">
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="static"/>
+				<xs:enumeration value="dynamic"/>
+				<xs:enumeration value="event"/>
+			</xs:restriction>
+		</xs:simpleType>
+		<xs:group name="basicMembers">
+			<xs:choice>
+				<xs:element ref="Absolute"/>
+				<xs:element ref="Activity"/>
+				<xs:element ref="Alternative"/>
+				<xs:element ref="Binary"/>
+				<xs:element ref="Enumeration"/>
+				<xs:element ref="ListEntity"/>
+				<xs:element ref="ObjectEntity"/>
+				<xs:element ref="Relative"/>
+				<xs:element ref="Text"/>
+				<xs:element ref="Time"/>
+			</xs:choice>
+		</xs:group>
+		<xs:complexType name="basicInterfaceElementAttributes">
+			<xs:attribute name="url" type="nameType" use="required"/>
+		</xs:complexType>
+		<xs:complexType name="basicMemberAttributes">
+			<xs:attribute name="name" type="nameType" use="required"/>
+			<xs:attribute name="required" type="xs:boolean" use="optional" default="true"/>
+		</xs:complexType>
+	</xs:schema>
