@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+* EXLAP 1.3 - Core schema definition
+* Authors:
+* Jens Krueger, Volkswagen AG
+* Hans-Christian Fricke, Volkswagen AG
+* This work is licensed under the Creative Commons "Namensnennung-Weitergabe unter gleichen
+* Bedingungen 3.0 Deutschland License": http://creativecommons.org/licenses/by-sa/3.0/de/ 
+*
+* This XML schema is the base for the definition of EXLAP service interface profiles.
+-->
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://exlap.de/v1/protocol" targetNamespace="http://exlap.de/v1/protocol" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="definitions.xsd"/>
+	<xs:include schemaLocation="object.xsd"/>
+	<xs:element name="Profile">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="About" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="Object" maxOccurs="unbounded"/>
+				<xs:element ref="Function" maxOccurs="unbounded"/>
+				<xs:element ref="Type" maxOccurs="unbounded"/>
+			</xs:choice>
+			<xs:attribute name="name" type="nameType" use="required"/>
+			<xs:attribute name="version" use="optional" default="0.0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9]*\.[0-9]*"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="implementation" use="optional" default=""/>
+		</xs:complexType>
+		<xs:key name="objectUrlUniqueness">
+			<xs:selector xpath="Object|Function|Type"/>
+			<xs:field xpath="@url"/>
+		</xs:key>
+	</xs:element>
+	<xs:element name="About"/>
+</xs:schema>
