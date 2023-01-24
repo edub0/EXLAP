@@ -83,11 +83,13 @@ def Req_Auth_Challenge():
     <Req id="100"><Authenticate phase="challenge" useHash="sha256"/></Req>
     Step one of 2 to authimpor
     '''
-    message = api.Req()
+    # TODO testing rebuild of xml schema using exlap_v2
+    message = bpi.Req()
     conn_count()
     message.set_id(session_number)
-    auth = api.Authenticate()
-    auth.set_phase(api.phaseType.CHALLENGE)
+    auth = bpi.Authenticate()
+    auth.set_phase(bpi.phaseType.CHALLENGE)
+    auth.set_useHash('sha256')
     #TODO improve XML schema for sha256 support, ie. auth.set_useHash('sha256')
     message.set_Authenticate(auth)
     return str(message)
@@ -260,8 +262,8 @@ lol amazing
     #async def logger(self):
     '''log results somewhere'''
 
-#client = AsyncTCPClient('127.0.0.1', 8888) #from main()
-client = AsyncTCPClient('10.173.189.1', 25010)
+client = AsyncTCPClient('127.0.0.1', 8888) #from main()
+#client = AsyncTCPClient('10.173.189.1', 25010)
 
 async def main():
 
