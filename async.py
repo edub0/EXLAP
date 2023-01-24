@@ -5,16 +5,26 @@ import asyncio
 import random
 import base64
 import hashlib
+import exlap_v2 as bpi
+from lxml import etree
+
 
 #Global
 # Because VAG starts at 99 for some reason
 session_number = 98
-nonce = base64.b64decode('3203oZhpeVSQSrtdcC8wCA==')
-cnonce = base64.b64decode('1Y9BZPOYQyfBMQrqM/cDaA==')
+#nonce = '3203oZhpeVSQSrtdcC8wCA=='
+# cnonce = base64.b64decode('1Y9BZPOYQyfBMQrqM/cDaA==')
+nonce = ''
 #digest = 'digesty'
 user = 'PHP-D22200'
 password = 'Gv2g7nOS9DN1bkQA9YFDttZ1QqNeUDzg/2rzrnEKH70='
+
+# Create a queue that we will use to store our "workload".
+queue = asyncio.Queue()
+
 #End Globals
+
+
 
 def conn_count():
     '''command counter for exlap requests'''
@@ -24,10 +34,21 @@ def conn_count():
     else:
         session_number = 1
 
-def generate_nonce(length=16):
+def make_nonce(length=16):
     """Generate pseudo-random number."""
     a = ''.join([str(random.randint(0, 255)) for i in range(length)])
     return a.encode('utf-8')
+
+def make_cnonce():
+    '''seed a cnonce as a bytearrary'''
+    cnonce = bytearray(16)
+    for i in range(16):
+        cnonce[i] = random.randint(0, 255)
+    return cnonce 
+    # TODO - Determine if we should return this properly formatted for insertion into XML response.
+    #ie. print(base64.b64encode(calculate_cnonce()).decode('utf-8')) 
+
+cnonce = make_cnonce()
 
 def Req_Capability():
     '''Setup a request message
@@ -84,46 +105,71 @@ def calculate_digest_v2(user: str, password: str, nonce: bytes, cnonce: bytes):
     return digest3.digest()
 
 # Build a exlap auth challenge function
-def Req_Auth_Response():
+def Req_Auth_Response(nonce):
     '''
     Respond to the challenge nonce, ie.
     <Req id="101"><Authenticate phase="response" cnonce="1Y9BZPOYQyfBMQrqM/cDaA==" digest="BBk5/Y2EVXJW1oRQ+Kan0iN/nZTGnHtVGles9a8zCTQ=" user="PHP-D22200"/></Req>
-    '''
+    '''    
     message = api.Req()
     conn_count()
     message.set_id(session_number)
     auth = api.Authenticate()
-    auth.set_phase('response')
-    auth.set_cnonce('meh')
-    auth.set_digest('meh+meh')
-    auth.set_user('PHP-D22200')
+    auth.set_phase(api.phaseType.RESPONSE)
+    cnonce = (base64.b64encode(make_cnonce())).decode('utf-8')
+    auth.set_cnonce(cnonce)
+    digest = exlap_sha256_as_b64(user,password,nonce,cnonce) 
+    auth.set_digest(digest)
+    auth.set_user(user)
     message.set_Authenticate(auth)
-
-    response = '<Req id="101"><Authenticate phase="response" cnonce="1Y9BZPOYQyfBMQrqM/cDaA==" digest="BBk5/Y2EVXJW1oRQ+Kan0iN/nZTGnHtVGles9a8zCTQ=" user="PHP-D22200"/></Req>'
-    api.parseString(response)
     return str(message)
 
-    #api.Authenticate - line 2439 
+async def auth_worker(data):
+    '''
+    Worker function which awaits population of 'nonce' variable.
+    utilizes it for Req_Auth_Response() msg.
+    '''
+    global nonce
+    if nonce == '':
+        try:
+            print(f'DEBUG nonce prior: {nonce}<--')
+            doc = etree.XML(data.decode())
+            memoryElem = doc.find('Challenge')
+            print(memoryElem.get('nonce'))
+            nonce = memoryElem.get('nonce')
+            print(f'DEBUG - nonce value {nonce}')
+            queue.put_nowait(await client.send(Req_Auth_Response(nonce)))
+        except: (etree.ErrorTypes)
+        print(f'No nonce found {doc}' )
+        pass
+    else:
+        print('DEBUG - passed auth worker')
+        pass
 
-def calculate_sha256_digest(user: str, password: str, nonce: bytes, cnonce: bytes):
+
+    # await nonce == etree.XML((client.recieve.data)decode())
+    # memoryElem = nonce.find('Challenge')
+    # print(memoryElem.get('nonce'))
+
+# Test response field for now. can parse strings this way.
+    
+ 
+
+def exlap_sha256_as_b64(user: str, password: str, nonce: bytes, cnonce: bytes):
     '''this is a mashup of a sha256digest, with the additional hashing steps required for EXLAP auth as implimented (ie. not EXLAP v1.3 compliant)
     TODO - need to probably chance nonce and cnonce formatting when ingesting from XML
     '''
+    #await auth_worker()
     digest = hashlib.sha256()
-    digest.update((user + ":" + password + ":" + base64.b64encode(nonce).decode() + ":" + base64.b64encode(cnonce).decode()).encode())
-    base64encoded = base64.b64encode(digest.digest())
+    # Variation one
+    # digest.update((user + ":" + password + ":" + base64.b64encode(nonce).decode() + ":" + base64.b64encode(cnonce).decode()).encode())
+    # Variation two
+    digest.update((user + ":" + password + ":" + nonce + ":" + (base64.b64encode(make_cnonce())).decode('utf-8')).encode('utf-8'))
+    base64encoded = base64.b64encode(digest.digest()).decode('utf-8')
     return base64encoded
 
-def calculate_cnonce():
-    '''seed a cnonce as a bytearrary'''
-    cnonce = bytearray(16)
-    for i in range(16):
-        cnonce[i] = random.randint(0, 255)
-    return cnonce 
-    # TODO - Determine if we should return this properly formatted for insertion into XML response.
-    #ie. print(base64.b64encode(calculate_cnonce()).decode('utf-8')) 
 
-'''
+class AsyncTCPClient:
+    '''
 This code defines a class AsyncTCPClient that has three methods connect, send and receive. 
 The connect method is used to create a socket object and connect to a server running on 
 the specified host and port. The send method is used to send a message to the server and 
@@ -139,7 +185,6 @@ can be run with python 3.5+ version.
 
 lol amazing
 '''
-class AsyncTCPClient:
     def __init__(self, host, port):
         self.host = host
         self.port = port
@@ -158,9 +203,52 @@ class AsyncTCPClient:
         '''need to add output of the recieve msg to be logged and validated
         Need multiple seperators https://bugs.python.org/issue37141
         '''
-        #patched to allow for multiple seperators. #<Req/>, <Rsp/>, <Dat/> and <Status/>
+        #TODO - Note changes from patching to allow for multiple seperators. #<Req/>, <Rsp/>, <Dat/> and <Status/>
         data = await self.reader.readuntil([b'</Rsp>', b'</Req>', b'</Dat>', b'</Status>'])
         print(f"Received: {data.decode('utf8')}")
+        if nonce == '':
+            try:
+                await auth_worker(data)
+            except:
+                print('no nonce found - recieve worker')
+            pass
+        
+        #TODO - Response Functions
+        # Setup a response parser (use a worker after the recieve queue is cleared?)
+        # Setup response content handling, use below java for error inspiration
+        #     public final void setResponseStatus(String str) {
+        # if (str == null) {
+        #     this.status = 0;
+        # } else if (str.equals(ExlapML.STATUS_MSG_OK)) {
+        #     this.status = 0;
+        # } else if (str.equals(ExlapML.STATUS_MSG_ERROR)) {
+        #     this.status = 1;
+        # } else if (str.equals(ExlapML.STATUS_MSG_NOTIMPLEMENTED)) {
+        #     this.status = 2;
+        # } else if (str.equals(ExlapML.STATUS_MSG_SUBSCRIPTIONLIMIT_REACHED)) {
+        #     this.status = 3;
+        # } else if (str.equals(ExlapML.STATUS_MSG_NOMATCHINGURL)) {
+        #     this.status = 4;
+        # } else if (str.equals(ExlapML.STATUS_MSG_VERSIONNOTSUPPORTED)) {
+        #     this.status = 5;
+        # } else if (str.equals(ExlapML.STATUS_MSG_AUTHENTICATIONFAILED)) {
+        #     this.status = 6;
+        # } else if (str.equals(ExlapML.STATUS_MSG_SYNTAXERROR)) {
+        #     this.status = 8;
+        # } else if (str.equals(ExlapML.STATUS_MSG_INTERNALERROR)) {
+        #     this.status = 9;
+        # } else if (str.equals(ExlapML.STATUS_MSG_ACCESSVIOLATION)) {
+        #     this.status = 10;
+        # } else if (str.equals(ExlapML.STATUS_MSG_INVALIDPARAMATER)) {
+        #     this.status = 11;
+        # } else if (str.equals(ExlapML.STATUS_MSG_PROCESSING)) {
+        #     this.status = 12;
+        # } else if (str.equals(ExlapML.STATUS_MSG_NOSUBSCRIPTION)) {
+        #     this.status = 1;
+        # } else {
+        #     throw new IllegalArgumentException("Illegal response status: " + str);
+        # }
+        # Setup
 
     async def close(self):
         self.writer.close()
@@ -171,6 +259,63 @@ class AsyncTCPClient:
 
     #async def logger(self):
     '''log results somewhere'''
+
+#client = AsyncTCPClient('127.0.0.1', 8888) #from main()
+client = AsyncTCPClient('10.173.189.1', 25010)
+
+async def main():
+
+
+
+    await client.connect()
+
+    # Create our list of Exlap commands
+    exlap_commands = [
+    await client.send(Req_Auth_Challenge()),
+    #client.send(Req_Auth_Response()),
+    await client.send(Req_Dir('*')),
+    #client.send(Req_Capability()),
+    await client.send(Req_Dir('*'))
+    
+    #await client.send(Req_Capability())
+    ]
+
+    # Load commands into asyncio.Queue
+    for cmds in exlap_commands:
+        queue.put_nowait(cmds)
+
+    #TODO - test out whether this logic is necessary and working
+    while queue.empty == True:
+        command == print('queue empty')
+    else:
+        command = await queue.get()
+    #---
+    #command = await queue.get()    
+
+    #TODO - probably should use a worker to pull commands from the queue, preserve
+    #the intent of each function and allow me to do heartbeat updates and so on
+
+    # main loop
+    while True:
+        command
+        await client.receive()
+        #await future_main() go here
+
+# Disable to test without calling car
+asyncio.run(main())
+
+
+
+# --------------------------------
+# Testing examples for auth debugging
+# print(f'1. cnonce: {cnonce}\n')
+# print(f'2. make_cnonce: {make_cnonce()}\n')
+# print('3. base64.b6to4encode with (make_cnone.decode as utf\n')
+# print((base64.b64encode(make_cnonce())).decode('utf-8'))
+# print(f'4. exlap_sha256_as_b64 with variables: {exlap_sha256_as_b64(user,password,nonce,cnonce)}\n end 4')
+
+# print(f'\n6. Full Auth Response:\n{Req_Auth_Response()}')
+
 
 # Queue Management
 
@@ -220,49 +365,3 @@ class AsyncTCPClient:
 # TODO - lookup this command exactly and its use
 # how is this different from queue.join()?
 #     await asyncio.gather(*tasks, return_exceptions=True)
-
-async def main():
-
-    client = AsyncTCPClient('127.0.0.1', 8888)
-    #client = AsyncTCPClient('10.173.189.1', 25010)
-    await client.connect()
-
-    # Create our list of Exlap commands
-    exlap_commands = [
-    await client.send(Req_Auth_Challenge()),
-    await client.send(Req_Auth_Response()),
-    await client.send(Req_Dir('*')),
-    await client.send(Req_Capability())
-    ]
-
-    # Create a queue that we will use to store our "workload".
-    queue = asyncio.Queue()
-
-    # Load commands into asyncio.Queue
-    for cmds in exlap_commands:
-        queue.put_nowait(cmds)
-
-    #TODO - test out whether this logic is necessary and working
-    while queue.empty == True:
-        command == ''
-    else:
-        command = await queue.get()
-
-    #TODO - probably should use a worker to pull commands from the queue, preserve
-    #the intent of each function and allow me to do heartbeat updates and so on
-
-    # main loop
-    while True:
-        command
-        await client.receive()
-        #await future_main() go here
-
-# Disable to test without calling car
-#asyncio.run(main())
-
-print(calculate_sha256_digest(user,password,nonce,cnonce))
-print(f'cnonce {cnonce}')
-print(f'cnonce {cnonce}')
-
-print(calculate_cnonce())
-print(base64.b64encode(calculate_cnonce()).decode('utf-8'))
