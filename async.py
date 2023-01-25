@@ -8,50 +8,55 @@ import hashlib
 import exlap_v2 as bpi
 from lxml import etree
 
-
-#Global
-# Because VAG starts at 99 for some reason
+#--Global--
+# Because VAG starts at 99
 session_number = 98
-#nonce = '3203oZhpeVSQSrtdcC8wCA=='
-# cnonce = base64.b64decode('1Y9BZPOYQyfBMQrqM/cDaA==')
 nonce = ''
-#digest = 'digesty'
 user = 'PHP-D22200'
 password = 'Gv2g7nOS9DN1bkQA9YFDttZ1QqNeUDzg/2rzrnEKH70='
+
+#netcat debug flag
+debug_127 = 1
 
 # Create a queue that we will use to store our "workload".
 queue = asyncio.Queue()
 
-#End Globals
+#--/Global--
 
 
 
 def conn_count():
-    '''command counter for exlap requests'''
+    '''exlap client message counter included in every client created EXLAP cmd 
+    to let you track responses
+    '''
     global session_number
     if session_number <= 999999998:
         session_number += 1
     else:
         session_number = 1
 
+#TODO - we may be able to remove this entirely. Not needed
 def make_nonce(length=16):
-    """Generate pseudo-random number."""
+    """Generate pseudo-random number.
+    this function isn't required but was useful during testing"""
     a = ''.join([str(random.randint(0, 255)) for i in range(length)])
     return a.encode('utf-8')
 
 def make_cnonce():
-    '''seed a cnonce as a bytearrary'''
-    cnonce = bytearray(16)
+    '''seeds a cnonce, returned as a 16 int byte arrary, base64 encoded and 
+    converted to a str
+    '''
+    b_cnonce = bytearray(16)
     for i in range(16):
-        cnonce[i] = random.randint(0, 255)
+        b_cnonce[i] = random.randint(0, 255)
+        cnonce = (base64.b64encode(b_cnonce)).decode('utf-8')
     return cnonce 
-    # TODO - Determine if we should return this properly formatted for insertion into XML response.
-    #ie. print(base64.b64encode(calculate_cnonce()).decode('utf-8')) 
 
+#TODO - we should be able to get rid of this, leftover from testing but double check
 cnonce = make_cnonce()
 
 def Req_Capability():
-    '''Setup a request message
+    '''Setup a request capabilities message
     ie. <Req id="99"><Protocol version="1" returnCapabilities="true"/></Req>'''
     message = api.Req()
     conn_count()
@@ -66,7 +71,7 @@ def Req_Dir(dir_filter):
     '''
     create a Dir command to display avaliable commands.
     use '*' for default behavior. Can also submit a specific string to search
-    on capabilities matching the string
+    on capabilities matching the string, ie. 
     '''
     message = api.Req()
     conn_count()
@@ -76,26 +81,13 @@ def Req_Dir(dir_filter):
     message.set_Dir(dir)
     return str(message)
 
-# Build a exlap auth answer function
-def Req_Auth_Challenge():
-    '''
-    Initiates Authentication attempt, ie:
-    <Req id="100"><Authenticate phase="challenge" useHash="sha256"/></Req>
-    Step one of 2 to authimpor
-    '''
-    # TODO testing rebuild of xml schema using exlap_v2
-    message = bpi.Req()
-    conn_count()
-    message.set_id(session_number)
-    auth = bpi.Authenticate()
-    auth.set_phase(bpi.phaseType.CHALLENGE)
-    auth.set_useHash('sha256')
-    #TODO improve XML schema for sha256 support, ie. auth.set_useHash('sha256')
-    message.set_Authenticate(auth)
-    return str(message)
-
+#TODO - include or kill?
 def calculate_digest_v2(user: str, password: str, nonce: bytes, cnonce: bytes):
-    '''this is a MD5 calculation function. Not tested or likely to be completed yet.'''
+    '''
+    this is a MD5 calculation function for authentication. Not tested or 
+    likely working. MD5 may be implimented in other model cars, but appears to 
+    default to sha256 in late model Porsche
+    '''
     digest = hashlib.md5()
     digest.update((user + ":" + password).encode())
     digest2 = hashlib.md5()
@@ -106,18 +98,44 @@ def calculate_digest_v2(user: str, password: str, nonce: bytes, cnonce: bytes):
     digest3.update(((digest.digest().hex()) + ":" + (digest2.digest().hex())).encode())
     return digest3.digest()
 
-# Build a exlap auth challenge function
+def Req_Auth_Challenge():
+    '''
+    Step one of two to auth to exlap server
+
+    Initiates Authentication attempt, ie:
+    <Req id="100"><Authenticate phase="challenge" useHash="sha256"/></Req>
+    '''
+    # TODO currently using modified XML schema (added 'useHash' to Authenticate branch)
+    # using 'bpi' exlap library which extends exlap.py with additional comamnds to export and new xml schema.
+    message = bpi.Req()
+    conn_count()
+    message.set_id(session_number)
+    auth = bpi.Authenticate()
+    auth.set_phase(bpi.phaseType.CHALLENGE)
+    auth.set_useHash('sha256')
+    #TODO improve XML schema for sha256 support, ie. auth.set_useHash('sha256')
+    message.set_Authenticate(auth)
+    return str(message)
+
 def Req_Auth_Response(nonce):
     '''
-    Respond to the challenge nonce, ie.
-    <Req id="101"><Authenticate phase="response" cnonce="1Y9BZPOYQyfBMQrqM/cDaA==" digest="BBk5/Y2EVXJW1oRQ+Kan0iN/nZTGnHtVGles9a8zCTQ=" user="PHP-D22200"/></Req>
+    Step two of two to auth to exlap server
+
+    using nonce_worker(), parses response xml msg from server for nonce content.
+    nonce_worker passes nonce value to exlap_sha256_64() and creates a sha256 
+    digest, ie. 
+
+    <Req id="101">
+        <Authenticate phase="response" cnonce="1Y9BZPOYQyfBMQrqM/cDaA==" 
+        digest="BBk5/Y2EVXJW1oRQ+Kan0iN/nZTGnHtVGles9a8zCTQ=" user="PHP-D22200"/>
+    </Req>
+
     '''    
     message = api.Req()
     conn_count()
     message.set_id(session_number)
     auth = api.Authenticate()
     auth.set_phase(api.phaseType.RESPONSE)
-    cnonce = (base64.b64encode(make_cnonce())).decode('utf-8')
     auth.set_cnonce(cnonce)
     digest = exlap_sha256_as_b64(user,password,nonce,cnonce) 
     auth.set_digest(digest)
@@ -125,47 +143,34 @@ def Req_Auth_Response(nonce):
     message.set_Authenticate(auth)
     return str(message)
 
-async def auth_worker(data):
+async def nonce_worker(data):
     '''
-    Worker function which awaits population of 'nonce' variable.
-    utilizes it for Req_Auth_Response() msg.
+    Worker function which reads msgs on AsyncTCPClient() recieve worker, parsing
+    for utilizes it for Req_Auth_Response() msg.
     '''
     global nonce
     if nonce == '':
         try:
-            print(f'DEBUG nonce prior: {nonce}<--')
             doc = etree.XML(data.decode())
             memoryElem = doc.find('Challenge')
-            print(memoryElem.get('nonce'))
             nonce = memoryElem.get('nonce')
-            print(f'DEBUG - nonce value {nonce}')
             queue.put_nowait(await client.send(Req_Auth_Response(nonce)))
-        except: (etree.ErrorTypes)
-        print(f'No nonce found {doc}' )
+        except Exception as e:
+            print(f'Something broke in nonce_worker - {e}\nLikely server responded without a response msg.\nTODO - if to check for challenge and fail otherwise' )
         pass
     else:
-        print('DEBUG - passed auth worker')
         pass
 
-
-    # await nonce == etree.XML((client.recieve.data)decode())
-    # memoryElem = nonce.find('Challenge')
-    # print(memoryElem.get('nonce'))
-
-# Test response field for now. can parse strings this way.
-    
- 
-
 def exlap_sha256_as_b64(user: str, password: str, nonce: bytes, cnonce: bytes):
-    '''this is a mashup of a sha256digest, with the additional hashing steps required for EXLAP auth as implimented (ie. not EXLAP v1.3 compliant)
-    TODO - need to probably chance nonce and cnonce formatting when ingesting from XML
+    '''this is a mashup with sha256digest and additional hashing steps required 
+    for EXLAP auth as implimented. This method is not complient with v1.3 EXLAP 
+    documentation
+    TODO - need to probably chance nonce and cnonce formatting when ingesting 
+    from XML
     '''
     #await auth_worker()
     digest = hashlib.sha256()
-    # Variation one
-    # digest.update((user + ":" + password + ":" + base64.b64encode(nonce).decode() + ":" + base64.b64encode(cnonce).decode()).encode())
-    # Variation two
-    digest.update((user + ":" + password + ":" + nonce + ":" + (base64.b64encode(make_cnonce())).decode('utf-8')).encode('utf-8'))
+    digest.update((user + ":" + password + ":" + nonce + ":" + cnonce).encode('utf-8'))
     base64encoded = base64.b64encode(digest.digest()).decode('utf-8')
     return base64encoded
 
@@ -199,7 +204,7 @@ lol amazing
     async def send(self, message):
         self.writer.write(message.encode('utf8'))
         await self.writer.drain()
-        print(f"Sent: {message}")
+        print(f"\nSent: {message}\n")
 
     async def receive(self):
         '''need to add output of the recieve msg to be logged and validated
@@ -207,12 +212,12 @@ lol amazing
         '''
         #TODO - Note changes from patching to allow for multiple seperators. #<Req/>, <Rsp/>, <Dat/> and <Status/>
         data = await self.reader.readuntil([b'</Rsp>', b'</Req>', b'</Dat>', b'</Status>'])
-        print(f"Received: {data.decode('utf8')}")
+        print(f"\nReceived: {data.decode('utf8')}\n")
         if nonce == '':
             try:
-                await auth_worker(data)
+                await nonce_worker(data)
             except:
-                print('no nonce found - recieve worker')
+                print('nonce challenge not found - unauthenticated or still looking')
             pass
         
         #TODO - Response Functions
@@ -262,24 +267,20 @@ lol amazing
     #async def logger(self):
     '''log results somewhere'''
 
-client = AsyncTCPClient('127.0.0.1', 8888) #from main()
-#client = AsyncTCPClient('10.173.189.1', 25010)
+#TODO - moved out of main to allow for testing, can also use a global
+if debug_127 == 0:
+    client = AsyncTCPClient('10.173.189.1', 25010)
+else:
+    client = AsyncTCPClient('127.0.0.1', 8888)
 
 async def main():
-
-
 
     await client.connect()
 
     # Create our list of Exlap commands
     exlap_commands = [
     await client.send(Req_Auth_Challenge()),
-    #client.send(Req_Auth_Response()),
-    await client.send(Req_Dir('*')),
-    #client.send(Req_Capability()),
-    await client.send(Req_Dir('*'))
-    
-    #await client.send(Req_Capability())
+    client.send(Req_Dir('*'))
     ]
 
     # Load commands into asyncio.Queue
@@ -287,7 +288,7 @@ async def main():
         queue.put_nowait(cmds)
 
     #TODO - test out whether this logic is necessary and working
-    while queue.empty == True:
+    if queue.empty == True:
         command == print('queue empty')
     else:
         command = await queue.get()
@@ -303,21 +304,9 @@ async def main():
         await client.receive()
         #await future_main() go here
 
-# Disable to test without calling car
 asyncio.run(main())
 
-
-
 # --------------------------------
-# Testing examples for auth debugging
-# print(f'1. cnonce: {cnonce}\n')
-# print(f'2. make_cnonce: {make_cnonce()}\n')
-# print('3. base64.b6to4encode with (make_cnone.decode as utf\n')
-# print((base64.b64encode(make_cnonce())).decode('utf-8'))
-# print(f'4. exlap_sha256_as_b64 with variables: {exlap_sha256_as_b64(user,password,nonce,cnonce)}\n end 4')
-
-# print(f'\n6. Full Auth Response:\n{Req_Auth_Response()}')
-
 
 # Queue Management
 
@@ -331,11 +320,10 @@ asyncio.run(main())
 #         # Work on the task
 #         print('====')
 #         print(task)
-#         # Notify the queue that the "work item" has been processed.
-    # TODO - lookup this command's exact effect
-#         queue.task_done()
 
-#         print(f'{name} has finished {task}')
+#         # Notify the queue that the "work item" has been processed.
+#         queue.task_done()
+#         #print(f'{name} has finished {task}')
 
 # TODO - Worker functions:
 # - ingest the bootstrap exlap command list
@@ -343,8 +331,6 @@ asyncio.run(main())
 # - read the command, set a heart beat timer into the queue if its a subscription
 # - set a timer function to see how long tasks are taking to be completed
 # - create a primary key to log subscriptions somewhere
-
-
 
 # TODO - Need a way to assign the worker function to process the queue
 
