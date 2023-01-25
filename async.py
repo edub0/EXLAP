@@ -16,10 +16,11 @@ user = 'PHP-D22200'
 password = 'Gv2g7nOS9DN1bkQA9YFDttZ1QqNeUDzg/2rzrnEKH70='
 
 #netcat debug flag
-debug_127 = 1
+debug_127 = 0
 
 # Create a queue that we will use to store our "workload".
-queue = asyncio.Queue()
+exlap_queue = asyncio.Queue()
+exlap_auth = asyncio.Queue()
 
 #--/Global--
 
@@ -43,7 +44,7 @@ def make_nonce(length=16):
     return a.encode('utf-8')
 
 def make_cnonce():
-    '''seeds a cnonce, returned as a 16 int byte arrary, base64 encoded and 
+    '''seeds a cnonce, returned as a 16 int byte arrary-> base64 encoded-> and 
     converted to a str
     '''
     b_cnonce = bytearray(16)
@@ -51,9 +52,6 @@ def make_cnonce():
         b_cnonce[i] = random.randint(0, 255)
         cnonce = (base64.b64encode(b_cnonce)).decode('utf-8')
     return cnonce 
-
-#TODO - we should be able to get rid of this, leftover from testing but double check
-cnonce = make_cnonce()
 
 def Req_Capability():
     '''Setup a request capabilities message
@@ -136,6 +134,7 @@ def Req_Auth_Response(nonce):
     message.set_id(session_number)
     auth = api.Authenticate()
     auth.set_phase(api.phaseType.RESPONSE)
+    cnonce = make_cnonce()
     auth.set_cnonce(cnonce)
     digest = exlap_sha256_as_b64(user,password,nonce,cnonce) 
     auth.set_digest(digest)
@@ -154,7 +153,8 @@ async def nonce_worker(data):
             doc = etree.XML(data.decode())
             memoryElem = doc.find('Challenge')
             nonce = memoryElem.get('nonce')
-            queue.put_nowait(await client.send(Req_Auth_Response(nonce)))
+            #asyncio.create_task(await client.send(Req_Auth_Response(nonce)),(f'auth-submittal', exlap_queue))
+            exlap_queue.put_nowait(await client.send(Req_Auth_Response(nonce)))
         except Exception as e:
             print(f'Something broke in nonce_worker - {e}\nLikely server responded without a response msg.\nTODO - if to check for challenge and fail otherwise' )
         pass
@@ -168,7 +168,6 @@ def exlap_sha256_as_b64(user: str, password: str, nonce: bytes, cnonce: bytes):
     TODO - need to probably chance nonce and cnonce formatting when ingesting 
     from XML
     '''
-    #await auth_worker()
     digest = hashlib.sha256()
     digest.update((user + ":" + password + ":" + nonce + ":" + cnonce).encode('utf-8'))
     base64encoded = base64.b64encode(digest.digest()).decode('utf-8')
@@ -273,57 +272,71 @@ if debug_127 == 0:
 else:
     client = AsyncTCPClient('127.0.0.1', 8888)
 
-async def main():
+async def waiter(event):
+    print('waiting for it ...')
+    await event.wait()
+    print('... got it!')
 
+async def main():
+    #This needs to come up before the exlap workers
     await client.connect()
 
-    # Create our list of Exlap commands
-    exlap_commands = [
-    await client.send(Req_Auth_Challenge()),
-    client.send(Req_Dir('*'))
+
+    exlap_auths = [
+    Req_Dir('1st cmd'),
+    Req_Auth_Challenge()
     ]
+    for cmds in exlap_auths:
+        await exlap_auth.put(cmds)
 
-    # Load commands into asyncio.Queue
-    for cmds in exlap_commands:
-        queue.put_nowait(cmds)
+    async def exlap_auth_worker(name, queue):
+        '''worker submits exlap commands to server'''
+        while True:
+            # Get a "work item" out of the queue.
+            task = await exlap_auth.get()
+            # Work on the task
+            #print(task)
+            await client.send(task)
+            # Notify the queue that the "work item" has been processed.
+            exlap_auth.task_done()
+            #done, pending = await asyncio.wait(task, return_when=asyncio.FIRST_COMPLETED)
 
-    #TODO - test out whether this logic is necessary and working
-    if queue.empty == True:
-        command == print('queue empty')
-    else:
-        command = await queue.get()
-    #---
-    #command = await queue.get()    
+            #print(f'exlap_worker submitted: \n{task}')
 
-    #TODO - probably should use a worker to pull commands from the queue, preserve
-    #the intent of each function and allow me to do heartbeat updates and so on
+    asyncio.create_task(exlap_auth_worker(f'exlap_auth_worker', exlap_auth))
+  
+    # Create an Event object.
+    event = asyncio.Event()
 
-    # main loop
-    while True:
-        command
-        await client.receive()
-        #await future_main() go here
+    # Spawn a Task to wait until 'event' is set.
+    waiter_task = asyncio.create_task(waiter(event))
 
-asyncio.run(main())
+    # Sleep for 1 second and set the event.
+    await asyncio.sleep(10)
+    event.set()
 
-# --------------------------------
+    # Wait until the waiter task is finished.
+    await waiter_task
+
+
+    #await exlap_auth.join()
 
 # Queue Management
 
 # TODO - Need workers function
 
-# async def worker_foo(name, queue):
-#     '''this processes a command in the queue'''
-#     while True:
-#         # Get a "work item" out of the queue.
-#         task = await queue.get()
-#         # Work on the task
-#         print('====')
-#         print(task)
+    async def exlap_worker(name, exlap_queue):
+        '''worker submits exlap commands to server'''
+        while True:
+            # Get a "work item" out of the queue.
+            task = await exlap_queue.get()
+            # Work on the task
+            #print(task)
+            await client.send(task)
+            # Notify the queue that the "work item" has been processed.
+            exlap_queue.task_done()
+            #print(f'exlap_worker submitted: \n{task}')
 
-#         # Notify the queue that the "work item" has been processed.
-#         queue.task_done()
-#         #print(f'{name} has finished {task}')
 
 # TODO - Worker functions:
 # - ingest the bootstrap exlap command list
@@ -332,14 +345,30 @@ asyncio.run(main())
 # - set a timer function to see how long tasks are taking to be completed
 # - create a primary key to log subscriptions somewhere
 
+
 # TODO - Need a way to assign the worker function to process the queue
+    # Method to create workers for a given queue. tasks[] used for worker management
+    tasks = []
+    for i in range(1):
+        await exlap_auth.join()
+        task = asyncio.create_task(exlap_worker(f'exlap_worker-{i}', exlap_queue))
+        tasks.append(task)
 
-#     # Create three worker tasks to process the queue concurrently.
-#     tasks = []
-#     for i in range(1):
-#         task = asyncio.create_task(worker_bar(f'worker-{i}', queue))
-#         tasks.append(task)
 
+    # Create our list of Exlap commands
+    exlap_commands = [
+    Req_Capability(),
+    Req_Dir('*'),
+    Req_Capability(),
+    Req_Dir('*')
+    ]
+
+    # Load commands into asyncio.Queue
+    for cmds in exlap_commands:
+        await exlap_queue.put(cmds)
+    #TODO removed the await, and that blocks the queue
+
+    print(tasks)
 #     # Wait until the queue is fully processed.
 # TODO - lookup this command and its use exactly. This just makes sure all threads from the queue,
 # the await jobs, are completed and results ready before continuing.
@@ -353,3 +382,33 @@ asyncio.run(main())
 # TODO - lookup this command exactly and its use
 # how is this different from queue.join()?
 #     await asyncio.gather(*tasks, return_exceptions=True)
+
+    # usure about this right now
+    #await exlap_queue.join()
+  
+
+    # #TODO - test out whether this logic is necessary and working
+    # if exlap_queue.empty == True:
+    #     command == print('queue empty')
+    # else:
+    #     command = await exlap_queue.get()
+    # #---
+    #command = await queue.get()    
+
+    #TODO - probably should use a worker to pull commands from the queue, preserve
+    #the intent of each function and allow me to do heartbeat updates and so on
+
+
+
+    # main loop
+    while True:
+        
+        await client.receive()
+        #await future_main() go here
+
+asyncio.run(main())
+
+# --------------------------------
+
+#    Req_Dir('*'),
+#    Req_Dir('*')
