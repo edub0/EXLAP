@@ -1,0 +1,139 @@
+
+<!--Example exlap client commands from wireshark of Porsche Track app EXLAP session-->
+
+<Req id="99">
+    <Protocol version="1" returnCapabilities="true" />
+</Req>
+<Req id="100">
+    <Authenticate phase="challenge" useHash="sha256" />
+</Req>
+<Req id="101">
+    <Authenticate phase="response" cnonce="1Y9BZPOYQyfBMQrqM/cDaA=="
+        digest="BBk5/Y2EVXJW1oRQ+Kan0iN/nZTGnHtVGles9a8zCTQ=" user="PHP-D22200" />
+</Req>
+<Req id="102">
+    <Subscribe url="unitPressure" ival="100" timeStamp="true" />
+</Req>
+<Req id="103">
+    <Subscribe url="unitTimeFormat" ival="100" timeStamp="true" />
+</Req>
+<Req id="104">
+    <Subscribe url="gearboxOilTemperature" ival="100" timeStamp="true" />
+</Req>
+<Req id="105">
+    <Subscribe url="espTyreVelocities" ival="100" timeStamp="true" />
+</Req>
+<Req id="106">
+    <Subscribe url="gearTransmissionMode" ival="100" timeStamp="true" />
+</Req>
+<Req id="107">
+    <Subscribe url="tyreTemperatures_HP" ival="100" timeStamp="true" />
+</Req>
+<Req id="108">
+    <Subscribe url="outsideTemperature" ival="100" timeStamp="true" />
+</Req>
+<Req id="109">
+    <Subscribe url="unitTemperature" ival="100" timeStamp="true" />
+</Req>
+<Req id="110">
+    <Subscribe url="reverseGear" ival="100" timeStamp="true" />
+</Req>
+<Req id="111">
+    <Subscribe url="vehicleTime" ival="100" timeStamp="true" />
+</Req>
+<Req id="112">
+    <Subscribe url="currentOutputPower" ival="100" timeStamp="true" />
+</Req>
+<Req id="113">
+    <Subscribe url="lateralAcceleration" ival="100" timeStamp="true" />
+</Req>
+<Req id="114">
+    <Subscribe url="longitudinalAcceleration" ival="100" timeStamp="true" />
+</Req>
+<Req id="115">
+    <Subscribe url="wheelAngle" ival="100" timeStamp="true" />
+</Req>
+<Req id="116">
+    <Subscribe url="brakePressure" ival="100" timeStamp="true" />
+</Req>
+<Req id="117">
+    <Subscribe url="chassisOversteering" ival="100" timeStamp="true" />
+</Req>
+<Req id="118">
+    <Subscribe url="acceleratorPosition" ival="100" timeStamp="true" />
+</Req>
+<Req id="119">
+    <Subscribe url="unitVolume" ival="100" timeStamp="true" />
+</Req>
+<Req id="120">
+    <Subscribe url="coolantTemperature" ival="100" timeStamp="true" />f464ud3d
+</Req>
+<Req id="121">
+    <Subscribe url="oilTemperature" ival="100" timeStamp="true" />
+</Req>
+<Req id="122">
+    <Subscribe url="currentGear" ival="100" timeStamp="true" />
+</Req>
+<Req id="123">
+    <Subscribe url="espPassiveSensing" ival="100" timeStamp="true" />
+</Req>
+<Req id="124">
+    <Subscribe url="torqueDistribution" ival="100" timeStamp="true" />
+</Req>
+<Req id="125">
+    <Subscribe url="navPosition_HP" ival="100" timeStamp="true" />
+</Req>
+<Req id="126">
+    <Subscribe url="suspensionStates" ival="100" timeStamp="true" />
+</Req>
+<Req id="127">
+    <Subscribe url="driveMode" ival="100" timeStamp="true" />
+</Req>
+<Req id="128">
+    <Subscribe url="chassisUndersteering" ival="100" timeStamp="true" />
+</Req>
+<Req id="129">
+    <Subscribe url="System_UnitDistance" ival="100" timeStamp="true" />
+</Req>
+<Req id="130">
+    <Subscribe url="relChargingAirPressure" ival="100" timeStamp="true" />
+</Req>
+<Req id="131">
+    <Subscribe url="offroadTiltAngle" ival="100" timeStamp="true" />
+</Req>
+<Req id="132">
+    <Subscribe url="currentTorque" ival="100" timeStamp="true" />
+</Req>
+<Req id="133">
+    <Subscribe url="stopWatch_lapTime" ival="100" timeStamp="true" />
+</Req>
+<Req id="134">
+    <Subscribe url="suspensionProfile" ival="100" timeStamp="true" />
+</Req>
+<Req id="135">
+    <Subscribe url="navPosition_HP" ival="100" timeStamp="true" />
+</Req>
+<Req id="136">
+    <Subscribe url="vehicleIdenticationNumber" ival="100" timeStamp="true" />
+</Req>
+<Req id="137">
+    <Subscribe url="tyrePressures" ival="100" timeStamp="true" />
+</Req>
+<Req id="138">
+    <Subscribe url="dayMilage_HP" ival="100" timeStamp="true" />
+</Req>
+<Req id="139">
+    <Subscribe url="engineSpeed" ival="100" timeStamp="true" />
+</Req>
+<Req id="140">
+    <Subscribe url="unitDateFormat" ival="100" timeStamp="true" />
+</Req>
+<Req id="141">
+    <Subscribe url="espLamp" ival="100" timeStamp="true" />
+</Req>
+<Req id="142">
+    <Subscribe url="absChargingAirPressure" ival="100" timeStamp="true" />
+</Req>
+<Req id="150">
+    <Subscribe url="navPosition_HP" ival="100" timeStamp="true" />
+</Req>

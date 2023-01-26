@@ -11,7 +11,9 @@
 * and the service definitions. For reasons of length and readability descriptive XML annotations
 * are stripped out of this document.
 * 
-* Porsche App uses sha256 - added a new challenge method. Need to re-compile schema with GeneratorDS.py.
+* NOTE - EXLAP projeect added support for sha256 auth.
+* <xs:attribute name="useHash" type="xs:string" use="optional" default=""/>
+* added to <xs:element name="Authenticate">
 -->
 <xs:schema
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
