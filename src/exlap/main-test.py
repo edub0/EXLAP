@@ -33,23 +33,6 @@ exlap_queue = asyncio.Queue()
 # --/Global--
 
 
-# def cmd.conn_count():
-#     """exlap client message counter included in every client created EXLAP cmd
-#     to let you track responses
-#     """
-#     global session_number
-#     if session_number <= 999999998:
-#         session_number += 1
-#     else:
-        # session_number = 1
-
-
-# TODO - we may be able to remove this entirely. Not needed
-def make_nonce(length=16):
-    """Generate pseudo-random number.
-    this function isn't required but was useful during testing"""
-    a = "".join([str(random.randint(0, 255)) for i in range(length)])
-    return a.encode("utf-8")
 
 
 def make_cnonce():
@@ -61,40 +44,6 @@ def make_cnonce():
         b_cnonce[i] = random.randint(0, 255)
         cnonce = (base64.b64encode(b_cnonce)).decode("utf-8")
     return cnonce
-
-
-# def Req_Capability():
-#     """Setup a request capabilities message
-#     ie. <Req id="99"><Protocol version="1" returnCapabilities="true"/></Req>"""
-#     message = api.Req()
-#     cmd.conn_count()
-#     message.set_id(session_number)
-#     protocol = api.Protocol()
-#     protocol.set_version(1)
-#     protocol.set_returnCapabilities(True)
-#     message.set_Protocol(protocol)
-#     return str(message)
-
-
-
-
-
-# TODO - include or kill?
-def calculate_digest_v2(user: str, password: str, nonce: bytes, cnonce: bytes):
-    """
-    this is a MD5 calculation function for authentication. Not tested or
-    likely working. MD5 may be implimented in other model cars, but appears to
-    default to sha256 in late model Porsche
-    """
-    digest = hashlib.md5()
-    digest.update((user + ":" + password).encode())
-    digest2 = hashlib.md5()
-    # digest2.update((byte_array_to_hex_string(nonce) + ":" + byte_array_to_hex_string(cnonce)).encode())
-    digest2.update((nonce.hex() + ":" + cnonce.hex()).encode())
-    digest3 = hashlib.md5()
-    # digest3.update((byte_array_to_hex_string(digest.digest()) + ":" + byte_array_to_hex_string(digest2.digest())).encode())
-    digest3.update(((digest.digest().hex()) + ":" + (digest2.digest().hex())).encode())
-    return digest3.digest()
 
 
 def Req_Auth_Challenge():
@@ -195,7 +144,7 @@ class AsyncTCPClient:
     and receive methods in a loop. This code also uses the async/await feature of python and
     can be run with python 3.5+ version.
 
-    lol amazing"""
+    """
 
     def __init__(self, host, port):
         self.host = host
@@ -216,7 +165,6 @@ class AsyncTCPClient:
         """need to add output of the recieve msg to be logged and validated
         Need multiple seperators https://bugs.python.org/issue37141
         """
-        # TODO - Note changes from patching to allow for multiple seperators. #<Req/>, <Rsp/>, <Dat/> and <Status/>
         data = await self.reader.readuntil(
             [b"</Rsp>", b"</Req>", b"</Dat>", b"</Status>"]
         )
@@ -228,52 +176,11 @@ class AsyncTCPClient:
                 print("nonce challenge not found - unauthenticated or still looking")
             pass
 
-        # TODO - Response Functions
-        # Setup a response parser (use a worker after the recieve queue is cleared?)
-        # Setup response content handling, use below java for error inspiration
-        #     public final void setResponseStatus(String str) {
-        # if (str == null) {
-        #     this.status = 0;
-        # } else if (str.equals(ExlapML.STATUS_MSG_OK)) {
-        #     this.status = 0;
-        # } else if (str.equals(ExlapML.STATUS_MSG_ERROR)) {
-        #     this.status = 1;
-        # } else if (str.equals(ExlapML.STATUS_MSG_NOTIMPLEMENTED)) {
-        #     this.status = 2;
-        # } else if (str.equals(ExlapML.STATUS_MSG_SUBSCRIPTIONLIMIT_REACHED)) {
-        #     this.status = 3;
-        # } else if (str.equals(ExlapML.STATUS_MSG_NOMATCHINGURL)) {
-        #     this.status = 4;
-        # } else if (str.equals(ExlapML.STATUS_MSG_VERSIONNOTSUPPORTED)) {
-        #     this.status = 5;
-        # } else if (str.equals(ExlapML.STATUS_MSG_AUTHENTICATIONFAILED)) {
-        #     this.status = 6;
-        # } else if (str.equals(ExlapML.STATUS_MSG_SYNTAXERROR)) {
-        #     this.status = 8;
-        # } else if (str.equals(ExlapML.STATUS_MSG_INTERNALERROR)) {
-        #     this.status = 9;
-        # } else if (str.equals(ExlapML.STATUS_MSG_ACCESSVIOLATION)) {
-        #     this.status = 10;
-        # } else if (str.equals(ExlapML.STATUS_MSG_INVALIDPARAMATER)) {
-        #     this.status = 11;
-        # } else if (str.equals(ExlapML.STATUS_MSG_PROCESSING)) {
-        #     this.status = 12;
-        # } else if (str.equals(ExlapML.STATUS_MSG_NOSUBSCRIPTION)) {
-        #     this.status = 1;
-        # } else {
-        #     throw new IllegalArgumentException("Illegal response status: " + str);
-        # }
-        # Setup
 
     async def close(self):
         self.writer.close()
         await self.writer.wait_closed()
 
-    # async def auth_exlap(self):
-    """create a auth command, injected into the queue"""
-
-    # async def logger(self):
-    """log results somewhere"""
 
 
 # TODO - moved out of main to allow for testing, can also use a global
@@ -294,7 +201,7 @@ async def main():
     await client.connect()
 
     # Exlap Authenticaion
-    exlap_auths = [Req_Auth_Challenge(),cmd.Req_Dir("*"),cmd.Req_Capability()]
+    exlap_auths = [Req_Auth_Challenge()]
     for cmds in exlap_auths:
         await exlap_auth.put(cmds)
 
@@ -307,14 +214,10 @@ async def main():
 
     asyncio.create_task(exlap_auth_worker(f"exlap_auth_worker", exlap_auth))
 
-    # await exlap_auth.join()
-
-    # await asyncio.gather(exlap_auth)
-
     # /Exlap Authentication
 
     # Exlap Commands
-    exlap_commands = [cmd.Req_Capability(), cmd.Req_Dir("*"), cmd.Req_Capability(), cmd.Req_Dir("*"), cmd.Sub_suspensionProfile(), cmd.Sub_suspensionStates(),cmd.Sub_espTyreVelocities()]
+    exlap_commands = [cmd.Req_Dir("*"), cmd.Sub_espTyreVelocities()]
     for cmds in exlap_commands:
         await exlap_queue.put(cmds)
 
@@ -344,6 +247,7 @@ async def main():
             # print(f'exlap_worker submitted: \n{task}')
 
     tasks = []
+
     for i in range(1):
         await exlap_auth.join()
         task = asyncio.create_task(exlap_worker(f"exlap_worker-{i}", exlap_queue))
@@ -351,102 +255,11 @@ async def main():
 
         await exlap_queue.join()
 
-    # TODO - Worker functions:
-    # - ingest the bootstrap exlap command list
-    # - Insert the commands into the main() loop to be sent
-    # - read the command, set a heart beat timer into the queue if its a subscription
-    # - set a timer function to see how long tasks are taking to be completed
-    # - create a primary key to log subscriptions somewhere
-
-    # TODO - Need a way to assign the worker function to process the queue
-    # Method to create workers for a given queue. tasks[] used for worker management
-    #     # Wait until the queue is fully processed.
-    # TODO - lookup this command and its use exactly. This just makes sure all threads from the queue,
-    # the await jobs, are completed and results ready before continuing.
-    #     await queue.join()
-
-    # TODO - need a way to clean/monitor/manage the workers
-    #     # Cancel our worker tasks.
-    #     for task in tasks:
-    #         task.cancel()
-    #     # Wait until all worker tasks are cancelled.
-    # TODO - lookup this command exactly and its use
-    # how is this different from queue.join()?
-    #     await asyncio.gather(*tasks, return_exceptions=True)
-
-    # usure about this right now
-    # await exlap_queue.join()
-
-    # #TODO - test out whether this logic is necessary and working
-    # if exlap_queue.empty == True:
-    #     command == print('queue empty')
-    # else:
-    #     command = await exlap_queue.get()
-    # #---
-    # command = await queue.get()
-
-    # TODO - probably should use a worker to pull commands from the queue, preserve
-    # the intent of each function and allow me to do heartbeat updates and so on
-
+    # Main() loop
     while True:
-        
+
         await client.receive()
         # await future_main() go here
 
 
 asyncio.run(main())
-
-
-# ---
-# import asyncio
-
-# async def process_item(item):
-#     print(f"Processing item {item}")
-#     await asyncio.sleep(1)
-#     print(f"Completed processing item {item}")
-
-# async def worker(name, queue):
-#     while True:
-#         item = await queue.get()
-#         print(f"{name} starts processing item {item}")
-#         await process_item(item)
-#         queue.task_done()
-
-# async def main():
-#     queue1 = asyncio.Queue()
-#     queue2 = asyncio.Queue()
-#     [queue1.put_nowait(i) for i in range(5)]
-#     [queue2.put_nowait(i) for i in range(5,10)]
-
-#     workers = []
-#     for i in range(2):
-#         worker_name = f"worker-{i+1}"
-#         workers.append(asyncio.create_task(worker(worker_name, queue1)))
-
-#     await queue1.join()
-#     for i in range(2):
-#         worker_name = f"worker-{i+1}"
-#         workers.append(asyncio.create_task(worker(worker_name, queue2)))
-
-#     await queue2.join()
-
-# asyncio.run(main())
-
-
-# import asyncio
-
-# async def process_queue(queue):
-#     while not queue.empty():
-#         item = await queue.get()
-#         print(f"Processing item {item}")
-#         await asyncio.sleep(1)
-
-# async def main():
-#     queue1 = asyncio.Queue()
-#     queue2 = asyncio.Queue()
-#     [queue1.put_nowait(i) for i in range(5)]
-#     [queue2.put_nowait(i) for i in range(5,10)]
-#     await process_queue(queue1)
-#     await process_queue(queue2)
-
-# asyncio.run(main())
