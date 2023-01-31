@@ -137,3 +137,177 @@
 <Req id="150">
     <Subscribe url="navPosition_HP" ival="100" timeStamp="true" />
 </Req>
+
+
+<!-- 718 GT4 Url options-->
+
+<Rsp id="102">
+    <UrlList>
+      <Match url="displayNightDesign"/>
+      <Match url="shortTermConsumptionPrimary"/>
+      <Match url="serviceInspection"/>
+      <Match url="Nav_GpxImport" type="function"/>
+      <Match url="temperature_control" type="function"/>
+      <Match url="Nav_GeoPosition"/>
+      <Match url="Car_vehicleState"/>
+      <Match url="System_HMISkin"/>
+      <Match url="unitTimeFormat"/>
+      <Match url="gearboxOilTemperature"/>
+      <Match url="ExAc_Resources"/>
+      <Match url="relChargingAirPressure"/>
+      <Match url="reverseGear"/>
+      <Match url="Nav_CurrentPosition"/>
+      <Match url="vehicleDate"/>
+      <Match url="acceleratorKickDown"/>
+      <Match url="System_RestrictionMode"/>
+      <Match url="dayMilage_HP"/>
+      <Match url="offroadTiltAngle"/>
+      <Match url="Nav_GuidanceDestination"/>
+      <Match url="unitDateFormat"/>
+      <Match url="longTermConsumptionPrimary"/>
+      <Match url="outsideTemperature"/>
+      <Match url="clampState"/>
+      <Match url="shortTermConsumptionSecondary"/>
+      <Match url="combustionEngineDisplacement"/>
+      <Match url="Nav_StartGuidance" type="function"/>
+      <Match url="oilTemperature"/>
+      <Match url="oilLevel"/>
+      <Match url="stopWatch_control" type="function"/>
+      <Match url="Nav_GuidanceRemaining"/>
+      <Match url="hevacConfiguration"/>
+      <Match url="Nav_Altitude"/>
+      <Match url="tyreTemperatures"/>
+      <Match url="driverIsBraking"/>
+      <Match url="ambienceLight_sets"/>
+      <Match url="engineTypes"/>
+      <Match url="chassisUndersteering"/>
+      <Match url="gearTransmissionMode"/>
+      <Match url="blinkingState"/>
+      <Match url="longTermConsumptionSecondary"/>
+      <Match url="stopWatch_totalTime"/>
+      <Match url="vehicleTime"/>
+      <Match url="coastingIsActive"/>
+      <Match url="seatHeater_zone1"/>
+      <Match url="seatHeater_zone2"/>
+      <Match url="Nav_Heading"/>
+      <Match url="seatHeater_zone3"/>
+      <Match url="Car_ambienceLightColour"/>
+      <Match url="seatHeater_zone4"/>
+      <Match url="hevOperationMode"/>
+      <Match url="combustionEngineInjection"/>
+      <Match url="ExAc_GetToken" type="function"/>
+      <Match url="currentGear"/>
+      <Match url="espTyreVelocities"/>
+      <Match url="fuelLevelState"/>
+      <Match url="Nav_GuidanceState"/>
+      <Match url="totalDistance"/>
+      <Match url="tyreRequiredPressures"/>
+      <Match url="cycleConsumptionPrimary"/>
+      <Match url="startStopState"/>
+      <Match url="Context_States"/>
+      <Match url="tyreStates"/>
+      <Match url="unitPressure"/>
+      <Match url="espPassiveSensing"/>
+      <Match url="System_DayNight"/>
+      <Match url="tyreTemperatures_HP"/>
+      <Match url="ambienceLight_installation"/>
+      <Match url="brakePressure"/>
+      <Match url="hevacFanLevelRear"/>
+      <Match url="maxChargingAirPressure"/>
+      <Match url="lightState_front"/>
+      <Match url="currentTorque"/>
+      <Match url="clutch"/>
+      <Match url="consumptionShortTermGeneral"/>
+      <Match url="engineSpeed"/>
+      <Match url="seatVentilation_zone3"/>
+      <Match url="stopWatch_lapTime"/>
+      <Match url="seatVentilation_zone4"/>
+      <Match url="Nav_LastDestinations"/>
+      <Match url="absChargingAirPressure"/>
+      <Match url="System_UnitDistance"/>
+      <Match url="parkingBrake"/>
+      <Match url="vehicleSpeed"/>
+      <Match url="espLamp"/>
+      <Match url="longitudinalAcceleration"/>
+      <Match url="doorState"/>
+      <Match url="cycleConsumptionSecondary"/>
+      <Match url="System_ProximityRecognition"/>
+      <Match url="coolantTemperature"/>
+      <Match url="torqueDistribution"/>
+      <Match url="ambienceLight_brightness"/>
+      <Match url="vehicleIdenticationNumber"/>
+      <Match url="stopWatch_previousLapTime"/>
+      <Match url="recuperationLevel"/>
+      <Match url="chassisOversteering"/>
+      <Match url="tankLevelSecondary"/>
+      <Match url="unitTemperature"/>
+      <Match url="lateralAcceleration"/>
+      <Match url="temperatureRearRight"/>
+      <Match url="unitVolume"/>
+      <Match url="acceleratorPosition"/>
+      <Match url="Car_vehicleInformation"/>
+      <Match url="offroadTiltAngleMaxValues"/>
+      <Match url="recommendedGear"/>
+      <Match url="temperatureRearLeft"/>
+      <Match url="ExAc_TouchToken" type="function"/>
+      <Match url="consumptionLongTermGeneral"/>
+      <Match url="allWheelDriveTorque"/>
+      <Match url="currentConsumptionSecondary"/>
+      <Match url="powermeter"/>
+      <Match url="tankLevelPrimary"/>
+      <Match url="relAllWheelDriveTorque"/>
+      <Match url="navPosition_HP"/>
+      <Match url="shiftRecommendation"/>
+      <Match url="fuelWarningSecondaryTank"/>
+      <Match url="wheelAngle"/>
+      <Match url="accIsActive"/>
+      <Match url="currentOutputPower"/>
+      <Match url="ExAc_ReleaseToken" type="function"/>
+      <Match url="currentConsumptionPrimary"/>
+      <Match url="suspensionProfile"/>
+      <Match url="Nav_StopGuidance" type="function"/>
+      <Match url="Nav_ResolveAddress" type="function"/>
+      <Match url="suspensionStates"/>
+      <Match url="ambienceLight_control" type="function"/>
+      <Match url="dayMilage"/>
+      <Match url="batteryVoltage"/>
+      <Match url="ambienceLight_profiles"/>
+      <Match url="tyrePressures"/>
+      <Match url="fuelWarningPrimaryTank"/>
+      <Match url="serviceOil"/>
+      <Match url="Nav_ResolveLastDestination" type="function"/>
+      <Match url="yawRate"/>
+      <Match url="driveMode"/>
+      <Match url="lightState_rear"/>
+      <Match url="maxOutputPower"/>
+      <Match url="System_Language"/>
+    </UrlList>
+  </Rsp>
+
+
+
+From output of
+
+<Req id="102">
+    <Dir/>
+</Req>
+
+response will be
+
+<Rsp id="102">
+    <UrlList>
+      <Match url="displayNightDesign"/>
+      <Match url="shortTerm....
+      ...list of urls...."/>
+      <Match url="System_Language"/>
+</UrlList>
+</Rsp>
+
+
+
+
+<Req id="139">
+    <Subscribe url="engineSpeed" ival="100" timeStamp="true" />
+</Req>
+
+<Match url="engineSpeed"/>
