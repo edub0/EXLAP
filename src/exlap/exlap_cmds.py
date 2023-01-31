@@ -18,7 +18,6 @@ def conn_count():
     else:
         session_number = 1
 
-
 def Req_heartbeat():
     """a subscription heartbeat message sent every 2 seconds"""
     message = api.Req()
@@ -42,6 +41,21 @@ def Req_Dir(dir_filter):
     message.set_Dir(dir)
     return str(message)
 
+def Req_Capability():
+    """
+    Setup a request capabilities message
+    ie. <Req id="99"><Protocol version="1" returnCapabilities=""true""/></Req>
+    """
+    message = api.Req()
+    conn_count()
+    message.set_id(session_number)
+    protocol = api.Protocol()
+    protocol.set_version(1)
+    protocol.set_returnCapabilities("true")
+    message.set_Protocol(protocol)
+    return str(message)
+
+
 def Sub_displayNightDesign():
     """
     unknown purpose
@@ -52,23 +66,8 @@ def Sub_displayNightDesign():
     subscribe = api.Subscribe()
     subscribe.set_url("displayNightDesign")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
-    return str(message)
-
-
-def Req_Capability():
-    """
-    Setup a request capabilities message
-    ie. <Req id="99"><Protocol version="1" returnCapabilities="true"/></Req>
-    """
-    message = api.Req()
-    conn_count()
-    message.set_id(session_number)
-    protocol = api.Protocol()
-    protocol.set_version(1)
-    protocol.set_returnCapabilities(True)
-    message.set_Protocol(protocol)
     return str(message)
 
 
@@ -82,7 +81,7 @@ def Sub_displayNightDesign():
     subscribe = api.Subscribe()
     subscribe.set_url("displayNightDesign")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -97,7 +96,7 @@ def Sub_shortTermConsumptionPrimary():
     subscribe = api.Subscribe()
     subscribe.set_url("shortTermConsumptionPrimary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -112,7 +111,7 @@ def Sub_serviceInspection():
     subscribe = api.Subscribe()
     subscribe.set_url("serviceInspection")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -127,7 +126,7 @@ def Sub_Nav_GeoPosition():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_GeoPosition")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -142,7 +141,7 @@ def Sub_Car_vehicleState():
     subscribe = api.Subscribe()
     subscribe.set_url("Car_vehicleState")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -157,7 +156,7 @@ def Sub_System_HMISkin():
     subscribe = api.Subscribe()
     subscribe.set_url("System_HMISkin")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -172,7 +171,7 @@ def Sub_unitTimeFormat():
     subscribe = api.Subscribe()
     subscribe.set_url("unitTimeFormat")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -187,7 +186,7 @@ def Sub_gearboxOilTemperature():
     subscribe = api.Subscribe()
     subscribe.set_url("gearboxOilTemperature")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -202,7 +201,7 @@ def Sub_ExAc_Resources():
     subscribe = api.Subscribe()
     subscribe.set_url("ExAc_Resources")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -217,7 +216,7 @@ def Sub_relChargingAirPressure():
     subscribe = api.Subscribe()
     subscribe.set_url("relChargingAirPressure")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -232,7 +231,7 @@ def Sub_reverseGear():
     subscribe = api.Subscribe()
     subscribe.set_url("reverseGear")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -247,7 +246,7 @@ def Sub_Nav_CurrentPosition():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_CurrentPosition")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -262,7 +261,7 @@ def Sub_vehicleDate():
     subscribe = api.Subscribe()
     subscribe.set_url("vehicleDate")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -277,7 +276,7 @@ def Sub_acceleratorKickDown():
     subscribe = api.Subscribe()
     subscribe.set_url("acceleratorKickDown")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -292,7 +291,7 @@ def Sub_System_RestrictionMode():
     subscribe = api.Subscribe()
     subscribe.set_url("System_RestrictionMode")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -307,7 +306,7 @@ def Sub_dayMilage_HP():
     subscribe = api.Subscribe()
     subscribe.set_url("dayMilage_HP")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -322,7 +321,7 @@ def Sub_offroadTiltAngle():
     subscribe = api.Subscribe()
     subscribe.set_url("offroadTiltAngle")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -337,7 +336,7 @@ def Sub_Nav_GuidanceDestination():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_GuidanceDestination")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -352,7 +351,7 @@ def Sub_unitDateFormat():
     subscribe = api.Subscribe()
     subscribe.set_url("unitDateFormat")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -367,7 +366,7 @@ def Sub_longTermConsumptionPrimary():
     subscribe = api.Subscribe()
     subscribe.set_url("longTermConsumptionPrimary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -382,7 +381,7 @@ def Sub_outsideTemperature():
     subscribe = api.Subscribe()
     subscribe.set_url("outsideTemperature")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -397,7 +396,7 @@ def Sub_clampState():
     subscribe = api.Subscribe()
     subscribe.set_url("clampState")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -412,7 +411,7 @@ def Sub_shortTermConsumptionSecondary():
     subscribe = api.Subscribe()
     subscribe.set_url("shortTermConsumptionSecondary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -427,7 +426,7 @@ def Sub_combustionEngineDisplacement():
     subscribe = api.Subscribe()
     subscribe.set_url("combustionEngineDisplacement")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -442,7 +441,7 @@ def Sub_oilTemperature():
     subscribe = api.Subscribe()
     subscribe.set_url("oilTemperature")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -457,7 +456,7 @@ def Sub_oilLevel():
     subscribe = api.Subscribe()
     subscribe.set_url("oilLevel")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -472,7 +471,7 @@ def Sub_Nav_GuidanceRemaining():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_GuidanceRemaining")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -487,7 +486,7 @@ def Sub_hevacConfiguration():
     subscribe = api.Subscribe()
     subscribe.set_url("hevacConfiguration")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -502,7 +501,7 @@ def Sub_Nav_Altitude():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_Altitude")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -517,7 +516,7 @@ def Sub_tyreTemperatures():
     subscribe = api.Subscribe()
     subscribe.set_url("tyreTemperatures")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -532,7 +531,7 @@ def Sub_driverIsBraking():
     subscribe = api.Subscribe()
     subscribe.set_url("driverIsBraking")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -547,7 +546,7 @@ def Sub_ambienceLight_sets():
     subscribe = api.Subscribe()
     subscribe.set_url("ambienceLight_sets")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -562,7 +561,7 @@ def Sub_engineTypes():
     subscribe = api.Subscribe()
     subscribe.set_url("engineTypes")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -577,7 +576,7 @@ def Sub_chassisUndersteering():
     subscribe = api.Subscribe()
     subscribe.set_url("chassisUndersteering")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -592,7 +591,7 @@ def Sub_gearTransmissionMode():
     subscribe = api.Subscribe()
     subscribe.set_url("gearTransmissionMode")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -607,7 +606,7 @@ def Sub_blinkingState():
     subscribe = api.Subscribe()
     subscribe.set_url("blinkingState")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -622,7 +621,7 @@ def Sub_longTermConsumptionSecondary():
     subscribe = api.Subscribe()
     subscribe.set_url("longTermConsumptionSecondary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -637,7 +636,7 @@ def Sub_stopWatch_totalTime():
     subscribe = api.Subscribe()
     subscribe.set_url("stopWatch_totalTime")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -652,7 +651,7 @@ def Sub_vehicleTime():
     subscribe = api.Subscribe()
     subscribe.set_url("vehicleTime")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -667,7 +666,7 @@ def Sub_coastingIsActive():
     subscribe = api.Subscribe()
     subscribe.set_url("coastingIsActive")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -682,7 +681,7 @@ def Sub_seatHeater_zone1():
     subscribe = api.Subscribe()
     subscribe.set_url("seatHeater_zone1")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -697,7 +696,7 @@ def Sub_seatHeater_zone2():
     subscribe = api.Subscribe()
     subscribe.set_url("seatHeater_zone2")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -712,7 +711,7 @@ def Sub_Nav_Heading():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_Heading")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -727,7 +726,7 @@ def Sub_seatHeater_zone3():
     subscribe = api.Subscribe()
     subscribe.set_url("seatHeater_zone3")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -742,7 +741,7 @@ def Sub_Car_ambienceLightColour():
     subscribe = api.Subscribe()
     subscribe.set_url("Car_ambienceLightColour")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -757,7 +756,7 @@ def Sub_seatHeater_zone4():
     subscribe = api.Subscribe()
     subscribe.set_url("seatHeater_zone4")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -772,7 +771,7 @@ def Sub_hevOperationMode():
     subscribe = api.Subscribe()
     subscribe.set_url("hevOperationMode")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -787,7 +786,7 @@ def Sub_combustionEngineInjection():
     subscribe = api.Subscribe()
     subscribe.set_url("combustionEngineInjection")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -802,7 +801,7 @@ def Sub_currentGear():
     subscribe = api.Subscribe()
     subscribe.set_url("currentGear")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -817,7 +816,7 @@ def Sub_espTyreVelocities():
     subscribe = api.Subscribe()
     subscribe.set_url("espTyreVelocities")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -832,7 +831,7 @@ def Sub_fuelLevelState():
     subscribe = api.Subscribe()
     subscribe.set_url("fuelLevelState")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -847,7 +846,7 @@ def Sub_Nav_GuidanceState():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_GuidanceState")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -862,7 +861,7 @@ def Sub_totalDistance():
     subscribe = api.Subscribe()
     subscribe.set_url("totalDistance")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -877,7 +876,7 @@ def Sub_tyreRequiredPressures():
     subscribe = api.Subscribe()
     subscribe.set_url("tyreRequiredPressures")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -892,7 +891,7 @@ def Sub_cycleConsumptionPrimary():
     subscribe = api.Subscribe()
     subscribe.set_url("cycleConsumptionPrimary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -907,7 +906,7 @@ def Sub_startStopState():
     subscribe = api.Subscribe()
     subscribe.set_url("startStopState")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -922,7 +921,7 @@ def Sub_Context_States():
     subscribe = api.Subscribe()
     subscribe.set_url("Context_States")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -937,7 +936,7 @@ def Sub_tyreStates():
     subscribe = api.Subscribe()
     subscribe.set_url("tyreStates")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -952,7 +951,7 @@ def Sub_unitPressure():
     subscribe = api.Subscribe()
     subscribe.set_url("unitPressure")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -967,7 +966,7 @@ def Sub_espPassiveSensing():
     subscribe = api.Subscribe()
     subscribe.set_url("espPassiveSensing")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -982,7 +981,7 @@ def Sub_System_DayNight():
     subscribe = api.Subscribe()
     subscribe.set_url("System_DayNight")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -997,7 +996,7 @@ def Sub_tyreTemperatures_HP():
     subscribe = api.Subscribe()
     subscribe.set_url("tyreTemperatures_HP")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1012,7 +1011,7 @@ def Sub_ambienceLight_installation():
     subscribe = api.Subscribe()
     subscribe.set_url("ambienceLight_installation")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1027,7 +1026,7 @@ def Sub_brakePressure():
     subscribe = api.Subscribe()
     subscribe.set_url("brakePressure")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1042,7 +1041,7 @@ def Sub_hevacFanLevelRear():
     subscribe = api.Subscribe()
     subscribe.set_url("hevacFanLevelRear")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1057,7 +1056,7 @@ def Sub_maxChargingAirPressure():
     subscribe = api.Subscribe()
     subscribe.set_url("maxChargingAirPressure")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1072,7 +1071,7 @@ def Sub_lightState_front():
     subscribe = api.Subscribe()
     subscribe.set_url("lightState_front")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1087,7 +1086,7 @@ def Sub_currentTorque():
     subscribe = api.Subscribe()
     subscribe.set_url("currentTorque")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1102,7 +1101,7 @@ def Sub_clutch():
     subscribe = api.Subscribe()
     subscribe.set_url("clutch")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1117,7 +1116,7 @@ def Sub_consumptionShortTermGeneral():
     subscribe = api.Subscribe()
     subscribe.set_url("consumptionShortTermGeneral")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1132,7 +1131,7 @@ def Sub_engineSpeed():
     subscribe = api.Subscribe()
     subscribe.set_url("engineSpeed")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1147,7 +1146,7 @@ def Sub_seatVentilation_zone3():
     subscribe = api.Subscribe()
     subscribe.set_url("seatVentilation_zone3")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1162,7 +1161,7 @@ def Sub_stopWatch_lapTime():
     subscribe = api.Subscribe()
     subscribe.set_url("stopWatch_lapTime")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1177,7 +1176,7 @@ def Sub_seatVentilation_zone4():
     subscribe = api.Subscribe()
     subscribe.set_url("seatVentilation_zone4")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1192,7 +1191,7 @@ def Sub_Nav_LastDestinations():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_LastDestinations")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1207,7 +1206,7 @@ def Sub_absChargingAirPressure():
     subscribe = api.Subscribe()
     subscribe.set_url("absChargingAirPressure")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1222,7 +1221,7 @@ def Sub_System_UnitDistance():
     subscribe = api.Subscribe()
     subscribe.set_url("System_UnitDistance")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1237,7 +1236,7 @@ def Sub_parkingBrake():
     subscribe = api.Subscribe()
     subscribe.set_url("parkingBrake")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1252,7 +1251,7 @@ def Sub_vehicleSpeed():
     subscribe = api.Subscribe()
     subscribe.set_url("vehicleSpeed")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1267,7 +1266,7 @@ def Sub_espLamp():
     subscribe = api.Subscribe()
     subscribe.set_url("espLamp")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1282,7 +1281,7 @@ def Sub_longitudinalAcceleration():
     subscribe = api.Subscribe()
     subscribe.set_url("longitudinalAcceleration")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1297,7 +1296,7 @@ def Sub_doorState():
     subscribe = api.Subscribe()
     subscribe.set_url("doorState")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1312,7 +1311,7 @@ def Sub_cycleConsumptionSecondary():
     subscribe = api.Subscribe()
     subscribe.set_url("cycleConsumptionSecondary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1327,7 +1326,7 @@ def Sub_System_ProximityRecognition():
     subscribe = api.Subscribe()
     subscribe.set_url("System_ProximityRecognition")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1342,7 +1341,7 @@ def Sub_coolantTemperature():
     subscribe = api.Subscribe()
     subscribe.set_url("coolantTemperature")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1357,7 +1356,7 @@ def Sub_torqueDistribution():
     subscribe = api.Subscribe()
     subscribe.set_url("torqueDistribution")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1372,7 +1371,7 @@ def Sub_ambienceLight_brightness():
     subscribe = api.Subscribe()
     subscribe.set_url("ambienceLight_brightness")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1387,7 +1386,7 @@ def Sub_vehicleIdenticationNumber():
     subscribe = api.Subscribe()
     subscribe.set_url("vehicleIdenticationNumber")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1402,7 +1401,7 @@ def Sub_stopWatch_previousLapTime():
     subscribe = api.Subscribe()
     subscribe.set_url("stopWatch_previousLapTime")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1417,7 +1416,7 @@ def Sub_recuperationLevel():
     subscribe = api.Subscribe()
     subscribe.set_url("recuperationLevel")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1432,7 +1431,7 @@ def Sub_chassisOversteering():
     subscribe = api.Subscribe()
     subscribe.set_url("chassisOversteering")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1447,7 +1446,7 @@ def Sub_tankLevelSecondary():
     subscribe = api.Subscribe()
     subscribe.set_url("tankLevelSecondary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1462,7 +1461,7 @@ def Sub_unitTemperature():
     subscribe = api.Subscribe()
     subscribe.set_url("unitTemperature")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1477,7 +1476,7 @@ def Sub_lateralAcceleration():
     subscribe = api.Subscribe()
     subscribe.set_url("lateralAcceleration")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1492,7 +1491,7 @@ def Sub_temperatureRearRight():
     subscribe = api.Subscribe()
     subscribe.set_url("temperatureRearRight")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1507,7 +1506,7 @@ def Sub_unitVolume():
     subscribe = api.Subscribe()
     subscribe.set_url("unitVolume")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1522,7 +1521,7 @@ def Sub_acceleratorPosition():
     subscribe = api.Subscribe()
     subscribe.set_url("acceleratorPosition")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1537,7 +1536,7 @@ def Sub_Car_vehicleInformation():
     subscribe = api.Subscribe()
     subscribe.set_url("Car_vehicleInformation")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1552,7 +1551,7 @@ def Sub_offroadTiltAngleMaxValues():
     subscribe = api.Subscribe()
     subscribe.set_url("offroadTiltAngleMaxValues")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1567,7 +1566,7 @@ def Sub_recommendedGear():
     subscribe = api.Subscribe()
     subscribe.set_url("recommendedGear")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1582,7 +1581,7 @@ def Sub_temperatureRearLeft():
     subscribe = api.Subscribe()
     subscribe.set_url("temperatureRearLeft")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1597,7 +1596,7 @@ def Sub_consumptionLongTermGeneral():
     subscribe = api.Subscribe()
     subscribe.set_url("consumptionLongTermGeneral")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1612,7 +1611,7 @@ def Sub_allWheelDriveTorque():
     subscribe = api.Subscribe()
     subscribe.set_url("allWheelDriveTorque")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1627,7 +1626,7 @@ def Sub_currentConsumptionSecondary():
     subscribe = api.Subscribe()
     subscribe.set_url("currentConsumptionSecondary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1642,7 +1641,7 @@ def Sub_powermeter():
     subscribe = api.Subscribe()
     subscribe.set_url("powermeter")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1657,7 +1656,7 @@ def Sub_tankLevelPrimary():
     subscribe = api.Subscribe()
     subscribe.set_url("tankLevelPrimary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1672,7 +1671,7 @@ def Sub_relAllWheelDriveTorque():
     subscribe = api.Subscribe()
     subscribe.set_url("relAllWheelDriveTorque")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1687,7 +1686,7 @@ def Sub_navPosition_HP():
     subscribe = api.Subscribe()
     subscribe.set_url("navPosition_HP")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1702,7 +1701,7 @@ def Sub_shiftRecommendation():
     subscribe = api.Subscribe()
     subscribe.set_url("shiftRecommendation")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1717,7 +1716,7 @@ def Sub_fuelWarningSecondaryTank():
     subscribe = api.Subscribe()
     subscribe.set_url("fuelWarningSecondaryTank")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1732,7 +1731,7 @@ def Sub_wheelAngle():
     subscribe = api.Subscribe()
     subscribe.set_url("wheelAngle")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1747,7 +1746,7 @@ def Sub_accIsActive():
     subscribe = api.Subscribe()
     subscribe.set_url("accIsActive")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1762,7 +1761,7 @@ def Sub_currentOutputPower():
     subscribe = api.Subscribe()
     subscribe.set_url("currentOutputPower")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1777,7 +1776,7 @@ def Sub_currentConsumptionPrimary():
     subscribe = api.Subscribe()
     subscribe.set_url("currentConsumptionPrimary")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1792,7 +1791,7 @@ def Sub_suspensionProfile():
     subscribe = api.Subscribe()
     subscribe.set_url("suspensionProfile")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1807,7 +1806,7 @@ def Sub_suspensionStates():
     subscribe = api.Subscribe()
     subscribe.set_url("suspensionStates")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1822,7 +1821,7 @@ def Sub_dayMilage():
     subscribe = api.Subscribe()
     subscribe.set_url("dayMilage")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1837,7 +1836,7 @@ def Sub_batteryVoltage():
     subscribe = api.Subscribe()
     subscribe.set_url("batteryVoltage")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1852,7 +1851,7 @@ def Sub_ambienceLight_profiles():
     subscribe = api.Subscribe()
     subscribe.set_url("ambienceLight_profiles")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1867,7 +1866,7 @@ def Sub_tyrePressures():
     subscribe = api.Subscribe()
     subscribe.set_url("tyrePressures")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1882,7 +1881,7 @@ def Sub_fuelWarningPrimaryTank():
     subscribe = api.Subscribe()
     subscribe.set_url("fuelWarningPrimaryTank")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1897,7 +1896,7 @@ def Sub_serviceOil():
     subscribe = api.Subscribe()
     subscribe.set_url("serviceOil")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1912,7 +1911,7 @@ def Sub_yawRate():
     subscribe = api.Subscribe()
     subscribe.set_url("yawRate")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1927,7 +1926,7 @@ def Sub_driveMode():
     subscribe = api.Subscribe()
     subscribe.set_url("driveMode")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1942,7 +1941,7 @@ def Sub_lightState_rear():
     subscribe = api.Subscribe()
     subscribe.set_url("lightState_rear")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1957,7 +1956,7 @@ def Sub_maxOutputPower():
     subscribe = api.Subscribe()
     subscribe.set_url("maxOutputPower")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1972,7 +1971,7 @@ def Sub_System_Language():
     subscribe = api.Subscribe()
     subscribe.set_url("System_Language")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -1990,7 +1989,7 @@ def Sub_Nav_GpxImport():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_GpxImport")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2005,7 +2004,7 @@ def Sub_temperature_control():
     subscribe = api.Subscribe()
     subscribe.set_url("temperature_control")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2020,7 +2019,7 @@ def Sub_Nav_StartGuidance():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_StartGuidance")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2035,7 +2034,7 @@ def Sub_stopWatch_control():
     subscribe = api.Subscribe()
     subscribe.set_url("stopWatch_control")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2050,7 +2049,7 @@ def Sub_ExAc_GetToken():
     subscribe = api.Subscribe()
     subscribe.set_url("ExAc_GetToken")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2065,7 +2064,7 @@ def Sub_ExAc_TouchToken():
     subscribe = api.Subscribe()
     subscribe.set_url("ExAc_TouchToken")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2080,7 +2079,7 @@ def Sub_ExAc_ReleaseToken():
     subscribe = api.Subscribe()
     subscribe.set_url("ExAc_ReleaseToken")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2095,7 +2094,7 @@ def Sub_Nav_StopGuidance():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_StopGuidance")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2110,7 +2109,7 @@ def Sub_Nav_ResolveAddress():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_ResolveAddress")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2125,7 +2124,7 @@ def Sub_ambienceLight_control():
     subscribe = api.Subscribe()
     subscribe.set_url("ambienceLight_control")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
@@ -2140,7 +2139,7 @@ def Sub_Nav_ResolveLastDestination():
     subscribe = api.Subscribe()
     subscribe.set_url("Nav_ResolveLastDestination")
     subscribe.set_ival(100)
-    subscribe.set_timeStamp(True)
+    subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
 
