@@ -1,0 +1,307 @@
+2021 Porsche 718 GT4
+
+File
+exlap_all_Subscriptions_GT4.pcapng
+
+Length:
+31 MB
+
+File Hash (SHA256):
+45dda0558dfddc0532a17f4d108b1aa61c75fc24601d33d06ce744d6a647c106
+
+Time Elapsed Logging: 00:11:00
+
+Total Packets
+166669
+
+Average packets per second 252.2
+
+Average packet size, 158 Bytes
+
+Total Bytes 26303798
+
+Average bytes/s 39 k
+
+Average bits/s 318 k
+
+Subscribed to 139 sources:
+        cmd.Sub_displayNightDesign(),
+        cmd.Sub_shortTermConsumptionPrimary(),
+        cmd.Sub_serviceInspection(),
+        cmd.Sub_Nav_GpxImport(),
+        cmd.Sub_temperature_control(),
+        cmd.Sub_Nav_GeoPosition(),
+        cmd.Sub_Car_vehicleState(),
+        cmd.Sub_System_HMISkin(),
+        cmd.Sub_unitTimeFormat(),
+        cmd.Sub_gearboxOilTemperature(),
+        cmd.Sub_ExAc_Resources(),
+        cmd.Sub_relChargingAirPressure(),
+        cmd.Sub_reverseGear(),
+        cmd.Sub_Nav_CurrentPosition(),
+        cmd.Sub_vehicleDate(),
+        cmd.Sub_acceleratorKickDown(),
+        cmd.Sub_System_RestrictionMode(),
+        cmd.Sub_dayMilage_HP(),
+        cmd.Sub_offroadTiltAngle(),
+        cmd.Sub_Nav_GuidanceDestination(),
+        cmd.Sub_unitDateFormat(),
+        cmd.Sub_longTermConsumptionPrimary(),
+        cmd.Sub_outsideTemperature(),
+        cmd.Sub_clampState(),
+        cmd.Sub_shortTermConsumptionSecondary(),
+        cmd.Sub_combustionEngineDisplacement(),
+        cmd.Sub_Nav_StartGuidance(),
+        cmd.Sub_oilTemperature(),
+        cmd.Sub_oilLevel(),
+        cmd.Sub_stopWatch_control(),
+        cmd.Sub_Nav_GuidanceRemaining(),
+        cmd.Sub_hevacConfiguration(),
+        cmd.Sub_Nav_Altitude(),
+        cmd.Sub_tyreTemperatures(),
+        cmd.Sub_driverIsBraking(),
+        cmd.Sub_ambienceLight_sets(),
+        cmd.Sub_engineTypes(),
+        cmd.Sub_chassisUndersteering(),
+        cmd.Sub_gearTransmissionMode(),
+        cmd.Sub_blinkingState(),
+        cmd.Sub_longTermConsumptionSecondary(),
+        cmd.Sub_stopWatch_totalTime(),
+        cmd.Sub_vehicleTime(),
+        cmd.Sub_coastingIsActive(),
+        cmd.Sub_seatHeater_zone1(),
+        cmd.Sub_seatHeater_zone2(),
+        cmd.Sub_Nav_Heading(),
+        cmd.Sub_seatHeater_zone3(),
+        cmd.Sub_Car_ambienceLightColour(),
+        cmd.Sub_seatHeater_zone4(),
+        cmd.Sub_hevOperationMode(),
+        cmd.Sub_combustionEngineInjection(),
+        cmd.Sub_ExAc_GetToken(),
+        cmd.Sub_currentGear(),
+        cmd.Sub_espTyreVelocities(),
+        cmd.Sub_fuelLevelState(),
+        cmd.Sub_Nav_GuidanceState(),
+        cmd.Sub_totalDistance(),
+        cmd.Sub_tyreRequiredPressures(),
+        cmd.Sub_cycleConsumptionPrimary(),
+        cmd.Sub_startStopState(),
+        cmd.Sub_Context_States(),
+        cmd.Sub_tyreStates(),
+        cmd.Sub_unitPressure(),
+        cmd.Sub_espPassiveSensing(),
+        cmd.Sub_System_DayNight(),
+        cmd.Sub_tyreTemperatures_HP(),
+        cmd.Sub_ambienceLight_installation(),
+        cmd.Sub_brakePressure(),
+        cmd.Sub_hevacFanLevelRear(),
+        cmd.Sub_maxChargingAirPressure(),
+        cmd.Sub_lightState_front(),
+        cmd.Sub_currentTorque(),
+        cmd.Sub_clutch(),
+        cmd.Sub_consumptionShortTermGeneral(),
+        cmd.Sub_engineSpeed(),
+        cmd.Sub_seatVentilation_zone3(),
+        cmd.Sub_stopWatch_lapTime(),
+        cmd.Sub_seatVentilation_zone4(),
+        cmd.Sub_Nav_LastDestinations(),
+        cmd.Sub_absChargingAirPressure(),
+        cmd.Sub_System_UnitDistance(),
+        cmd.Sub_parkingBrake(),
+        cmd.Sub_vehicleSpeed(),
+        cmd.Sub_espLamp(),
+        cmd.Sub_longitudinalAcceleration(),
+        cmd.Sub_doorState(),
+        cmd.Sub_cycleConsumptionSecondary(),
+        cmd.Sub_System_ProximityRecognition(),
+        cmd.Sub_coolantTemperature(),
+        cmd.Sub_torqueDistribution(),
+        cmd.Sub_ambienceLight_brightness(),
+        cmd.Sub_vehicleIdenticationNumber(),
+        cmd.Sub_stopWatch_previousLapTime(),
+        cmd.Sub_recuperationLevel(),
+        cmd.Sub_chassisOversteering(),
+        cmd.Sub_tankLevelSecondary(),
+        cmd.Sub_unitTemperature(),
+        cmd.Sub_lateralAcceleration(),
+        cmd.Sub_temperatureRearRight(),
+        cmd.Sub_unitVolume(),
+        cmd.Sub_acceleratorPosition(),
+        cmd.Sub_Car_vehicleInformation(),
+        cmd.Sub_offroadTiltAngleMaxValues(),
+        cmd.Sub_recommendedGear(),
+        cmd.Sub_temperatureRearLeft(),
+        cmd.Sub_ExAc_TouchToken(),
+        cmd.Sub_consumptionLongTermGeneral(),
+        cmd.Sub_allWheelDriveTorque(),
+        cmd.Sub_currentConsumptionSecondary(),
+        cmd.Sub_powermeter(),
+        cmd.Sub_tankLevelPrimary(),
+        cmd.Sub_relAllWheelDriveTorque(),
+        cmd.Sub_navPosition_HP(),
+        cmd.Sub_shiftRecommendation(),
+        cmd.Sub_fuelWarningSecondaryTank(),
+        cmd.Sub_wheelAngle(),
+        cmd.Sub_accIsActive(),
+        cmd.Sub_currentOutputPower(),
+        cmd.Sub_ExAc_ReleaseToken(),
+        cmd.Sub_currentConsumptionPrimary(),
+        cmd.Sub_suspensionProfile(),
+        cmd.Sub_Nav_StopGuidance(),
+        cmd.Sub_Nav_ResolveAddress(),
+        cmd.Sub_suspensionStates(),
+        cmd.Sub_ambienceLight_control(),
+        cmd.Sub_dayMilage(),
+        cmd.Sub_batteryVoltage(),
+        cmd.Sub_ambienceLight_profiles(),
+        cmd.Sub_tyrePressures(),
+        cmd.Sub_fuelWarningPrimaryTank(),
+        cmd.Sub_serviceOil(),
+        cmd.Sub_Nav_ResolveLastDestination(),
+        cmd.Sub_yawRate(),
+        cmd.Sub_driveMode(),
+        cmd.Sub_lightState_rear(),
+        cmd.Sub_maxOutputPower(),
+        cmd.Sub_System_Language()
+
+Sources producing data 
+
+Interesting to data log
+
+6448 "longitudinalAcceleration"> -
+6448 "lateralAcceleration"> -
+6448 "engineSpeed"> -
+6448 "dayMilage_HP"> - ?
+6448 "dayMilage"> - ?
+6448 "chassisUndersteering"> -
+6448 "chassisOversteering"> -
+6448 "brakePressure"> -
+6448 "absChargingAirPressure">
+6447 "wheelAngle"> -
+6447 "relAllWheelDriveTorque">
+6445 "yawRate">
+6445 "vehicleSpeed"> -
+6443 "espTyreVelocities"> -
+6442 "acceleratorPosition"> -
+3237 "navPosition_HP">
+ 650 "vehicleTime">
+ 648 "ExAc_Resources"> -
+ 621 "Nav_GeoPosition">
+ 621 "Nav_CurrentPosition">
+ 621 "Nav_Altitude">
+ 276 "gearboxOilTemperature"> -
+ 276 "espPassiveSensing"> -
+ 276 "espLamp">
+ 276 "currentGear"> - 
+ 138 "100" timeStamp
+
+Slow sources for data logging
+
+  65 "consumptionShortTermGeneral">
+  61 "consumptionLongTermGeneral">
+  49 "totalDistance">
+  48 "shortTermConsumptionPrimary">
+  35 "oilTemperature">
+  26 "torqueDistribution">
+  26 "shiftRecommendation">
+  26 "relChargingAirPressure">
+  26 "powermeter">
+  26 "currentTorque">
+  26 "currentOutputPower">
+  26 "allWheelDriveTorque">
+  17 "tyrePressures">
+  14 "tankLevelPrimary">
+  14 "coolantTemperature">
+   6 "outsideTemperature">
+   3 "vehicleDate">
+   3 "doorState">
+   3 "clampState">
+
+Likely no update sources
+
+   2 "unitVolume">
+   2 "unitTimeFormat">
+   2 "unitTemperature">
+   2 "unitPressure">
+   2 "unitDateFormat">
+   2 "tyreTemperatures">
+   2 "tyreStates">
+   2 "tyreRequiredPressures">
+   2 "tankLevelSecondary">
+   2 "stopWatch_totalTime">
+   2 "stopWatch_previousLapTime">
+   2 "stopWatch_lapTime">
+   2 "shortTermConsumptionSecondary">
+   2 "recuperationLevel">
+   2 "recommendedGear">
+   2 "parkingBrake">
+   2 "longTermConsumptionSecondary">
+   2 "longTermConsumptionPrimary">
+   2 "lightState_rear">
+   2 "lightState_front">
+   2 "gearTransmissionMode">
+   2 "engineTypes">
+   2 "driverIsBraking">
+   2 "displayNightDesign">
+   2 "cycleConsumptionSecondary">
+   2 "cycleConsumptionPrimary">
+   2 "currentConsumptionSecondary">
+   2 "currentConsumptionPrimary">
+   2 "coastingIsActive">
+   2 "clutch">
+   2 "blinkingState">
+   2 "batteryVoltage">
+   2 "acceleratorKickDown">
+   2 "accIsActive">
+
+Likely static or no data sources
+
+   1 "vehicleIdenticationNumber">
+   1 "tyreTemperatures_HP">
+   1 "temperatureRearRight">
+   1 "temperatureRearLeft">
+   1 "suspensionStates"> -
+   1 "suspensionProfile">
+   1 "startStopState">
+   1 "serviceOil">
+   1 "serviceInspection">
+   1 "seatVentilation_zone4">
+   1 "seatVentilation_zone3">
+   1 "seatHeater_zone4">
+   1 "seatHeater_zone3">
+   1 "seatHeater_zone2">
+   1 "seatHeater_zone1">
+   1 "reverseGear">
+   1 "oilLevel">
+   1 "offroadTiltAngleMaxValues">
+   1 "offroadTiltAngle">
+   1 "maxOutputPower">
+   1 "maxChargingAirPressure">
+   1 "hevacFanLevelRear">
+   1 "hevacConfiguration">
+   1 "hevOperationMode">
+   1 "fuelWarningSecondaryTank">
+   1 "fuelWarningPrimaryTank">
+   1 "fuelLevelState">
+   1 "driveMode">
+   1 "combustionEngineInjection">
+   1 "combustionEngineDisplacement">
+   1 "ambienceLight_sets">
+   1 "ambienceLight_profiles">
+   1 "ambienceLight_installation">
+   1 "ambienceLight_brightness">
+   1 "System_UnitDistance">
+   1 "System_RestrictionMode">
+   1 "System_ProximityRecognition">
+   1 "System_Language">
+   1 "System_HMISkin">
+   1 "System_DayNight">
+   1 "Nav_LastDestinations">
+   1 "Nav_Heading">
+   1 "Nav_GuidanceState">
+   1 "Nav_GuidanceRemaining">
+   1 "Nav_GuidanceDestination">
+   1 "Context_States">
+   1 "Car_vehicleState">
+   1 "Car_vehicleInformation"> - 
+   1 "Car_ambienceLightColour">

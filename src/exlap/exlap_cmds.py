@@ -178,7 +178,15 @@ def Sub_unitTimeFormat():
 
 def Sub_gearboxOilTemperature():
     """
-    capability to be determined
+    Update Rate: as needed
+    Engine Oil Temperature
+
+    <Dat timeStamp="2000-01-31T13:18:27.491000-7:00" url="oilTemperature">
+    <Abs name="temperature" val="231"/>
+    <Enm name="unit" val="..F"/>
+    <Enm name="state" val="valid"/>
+    </Dat>
+    
     """
     message = api.Req()
     conn_count()
@@ -193,7 +201,12 @@ def Sub_gearboxOilTemperature():
 
 def Sub_ExAc_Resources():
     """
-    capability to be determined
+    Update Rate: 1Hz
+    Unknown purpose
+
+    <Dat timeStamp="2000-01-31T13:21:20.997000-7:00" url="ExAc_Resources">
+    <List name="resources" state="nodata"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -298,7 +311,12 @@ def Sub_System_RestrictionMode():
 
 def Sub_dayMilage_HP():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Unknown purpose
+
+    <Dat timeStamp="2000-01-31T13:13:39.079000-7:00" url="dayMilage_HP">
+    <Abs name="value" val="7477"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -568,7 +586,12 @@ def Sub_engineTypes():
 
 def Sub_chassisUndersteering():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Likely math channel of wheel velocities showing understeer states
+
+    <Dat timeStamp="2000-01-31T13:14:49.992000-7:00" url="chassisUndersteering">
+    <Rel name="understeering" val="0"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -793,7 +816,16 @@ def Sub_combustionEngineInjection():
 
 def Sub_currentGear():
     """
-    capability to be determined
+    Update Rate: As needed
+    Active transmission gear
+    
+    <Dat timeStamp="2000-01-31T13:22:31.216000-7:00" url="currentGear">
+    <Enm name="currentGear" val="Gear3"/>
+    <Dat timeStamp="2000-01-31T13:22:33.422000-7:00" url="currentGear">
+    <Enm name="currentGear" val="NoGear"/>
+    <Dat timeStamp="2000-01-31T13:22:33.619000-7:00" url="currentGear">
+    <Enm name="currentGear" val="Gear2"/>
+
     """
     message = api.Req()
     conn_count()
@@ -808,7 +840,15 @@ def Sub_currentGear():
 
 def Sub_espTyreVelocities():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Indicates individual wheel speed. Must be based on expected rollout. Unit of measure Kmph
+
+    <Dat timeStamp="2000-01-31T13:14:28.698000-7:00" url="espTyreVelocities">
+    <Abs name="frontLeft" val="95.2"/>
+    <Abs name="frontRight" val="95.2"/>
+    <Abs name="rearLeft" val="96.80000000000001"/>
+    <Abs name="rearRight" val="96.5"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -958,7 +998,10 @@ def Sub_unitPressure():
 
 def Sub_espPassiveSensing():
     """
-    capability to be determined
+    Update Rate: As needed
+    Electronic Stability Control - unconfirmed
+    <Dat timeStamp="2000-01-31T13:23:48.381000-7:00" url="espPassiveSensing">
+    <Act name="isPassiveSensing" val="false"/>
     """
     message = api.Req()
     conn_count()
@@ -1018,7 +1061,12 @@ def Sub_ambienceLight_installation():
 
 def Sub_brakePressure():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Brake pressure in psi
+
+    <Dat timeStamp="2000-01-31T13:14:02.088000-7:00" url="brakePressure">
+    <Abs name="brakePressure" val="17.7"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -1123,7 +1171,11 @@ def Sub_consumptionShortTermGeneral():
 
 def Sub_engineSpeed():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Engine RPM
+
+    <Dat timeStamp="2000-01-31T13:14:25.691000-7:00" url="engineSpeed">
+    <Abs name="engineSpeed" val="4795"/>
     """
     message = api.Req()
     conn_count()
@@ -1243,7 +1295,14 @@ def Sub_parkingBrake():
 
 def Sub_vehicleSpeed():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Vehicle speed as indicated in driver dashboard. unknown 'state' purpose.
+
+    <Dat timeStamp="2000-01-31T13:14:00.388000-7:00" url="vehicleSpeed">
+    <Abs name="speed" val="19"/>
+    <Enm name="unit" val="mph"/>
+    <Enm name="state" val="valid"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -1273,7 +1332,11 @@ def Sub_espLamp():
 
 def Sub_longitudinalAcceleration():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Longitudinal Acceleration
+
+    <Dat timeStamp="2000-01-31T13:23:53.068000-7:00" url="longitudinalAcceleration">
+    <Abs name="longitudinalAcceleration" val=".15625"/>
     """
     message = api.Req()
     conn_count()
@@ -1378,7 +1441,12 @@ def Sub_ambienceLight_brightness():
 
 def Sub_vehicleIdenticationNumber():
     """
-    capability to be determined
+    Update Rate: Static
+    VIN number for vehicle
+
+    <Dat timeStamp="2000-01-31T13:13:06.638000-7:00" url="vehicleIdenticationNumber">
+    <Txt name="VIN" val="WP0XXXXXXXXXX"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -1423,7 +1491,12 @@ def Sub_recuperationLevel():
 
 def Sub_chassisOversteering():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Likely indicates oversteer condition based off wheel velocities
+
+    <Dat timeStamp="2000-01-31T13:23:38.280000-7:00" url="chassisOversteering">
+    <Rel name="oversteering" val="0"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -1468,7 +1541,11 @@ def Sub_unitTemperature():
 
 def Sub_lateralAcceleration():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Lateral Acceleration
+
+    <Dat timeStamp="2000-01-31T13:23:52.168000-7:00" url="lateralAcceleration">
+    <Abs name="lateralAcceleration" val="-.03"/>
     """
     message = api.Req()
     conn_count()
@@ -1513,7 +1590,11 @@ def Sub_unitVolume():
 
 def Sub_acceleratorPosition():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Accelerator pedal position as measure of 0 - 100%
+
+    <Dat timeStamp="2000-01-31T13:14:23.790000-7:00" url="acceleratorPosition">
+    <Rel name="acceleratorPosition" val=".7800000000000001"/>
     """
     message = api.Req()
     conn_count()
@@ -1528,7 +1609,13 @@ def Sub_acceleratorPosition():
 
 def Sub_Car_vehicleInformation():
     """
-    capability to be determined
+    Update Rate: Unknown
+    Unknown use
+    
+    <Dat timeStamp="2000-01-31T13:13:06.643000-7:00" url="Car_vehicleInformation">
+    <Abs name="StickerBits" state="nodata"/>
+    <Txt name="Type" state="nodata"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -1723,7 +1810,12 @@ def Sub_fuelWarningSecondaryTank():
 
 def Sub_wheelAngle():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Steering wheel angle. Need to identify unit of measurement and direction
+
+    <Dat timeStamp="2000-01-31T13:16:35.589000-7:00" url="wheelAngle">
+    <Abs name="wheelAngle" val="-6"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -1798,7 +1890,15 @@ def Sub_suspensionProfile():
 
 def Sub_suspensionStates():
     """
-    capability to be determined
+    Update Rate: Unknown
+    May indicate suspension height and velocity. No data present however.
+
+    <Dat timeStamp="2000-01-31T13:13:06.650000-7:00" url="suspensionStates">
+    <Abs name="height_frontLeft" state="nodata"/>
+    <Abs name="height_frontRight" state="nodata"/>
+    <Abs name="height_rearLeft" state="nodata"/>
+    <Abs name="height_rearRight" state="nodata"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -1813,7 +1913,12 @@ def Sub_suspensionStates():
 
 def Sub_dayMilage():
     """
-    capability to be determined
+    Update Rate: 10Hz
+    Unknown Purpose
+   
+    <Dat timeStamp="2000-01-31T13:13:06.751000-7:00" url="dayMilage">
+    <Abs name="value" val="7400"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
@@ -2144,8 +2249,8 @@ def Sub_Nav_ResolveLastDestination():
     return str(message)
 
 
-# Utilities
-#
+# # Utilities
+# #
 # CMD = [
 #     'displayNightDesign',
 #     'shortTermConsumptionPrimary',
@@ -2287,8 +2392,11 @@ def Sub_Nav_ResolveLastDestination():
 #     'System_Language'
 #     ]
 
+# # for i in CMD:
+# #     source = inspect.getsource(Sub_foo)
+# #     source = source.replace("foo", f"{i}",1)
+# #     source = source.replace("foo", f"'{i}'")
+# #     print(source)
+
 # for i in CMD:
-#     source = inspect.getsource(Sub_foo)
-#     source = source.replace("foo", f"{i}",1)
-#     source = source.replace("foo", f"'{i}'")
-#     print(source)
+#     print(f'cmd.Sub_{i}(),')
