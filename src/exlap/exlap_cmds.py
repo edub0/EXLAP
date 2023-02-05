@@ -832,7 +832,7 @@ def Sub_currentGear():
     message.set_id(session_number)
     subscribe = api.Subscribe()
     subscribe.set_url("currentGear")
-    subscribe.set_ival(100)
+    subscribe.set_ival(0)
     subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
@@ -855,7 +855,7 @@ def Sub_espTyreVelocities():
     message.set_id(session_number)
     subscribe = api.Subscribe()
     subscribe.set_url("espTyreVelocities")
-    subscribe.set_ival(100)
+    subscribe.set_ival(0)
     subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
@@ -1552,7 +1552,7 @@ def Sub_lateralAcceleration():
     message.set_id(session_number)
     subscribe = api.Subscribe()
     subscribe.set_url("lateralAcceleration")
-    subscribe.set_ival(100)
+    subscribe.set_ival(0)
     subscribe.set_timeStamp("true")
     message.set_Subscribe(subscribe)
     return str(message)
@@ -2350,7 +2350,7 @@ def Sub_Nav_ResolveLastDestination():
 #     'chassisOversteering',
 #     'tankLevelSecondary',
 #     'unitTemperature',
-#     'lateralAcceleration',
+#     'Acceleration',
 #     'temperatureRearRight',
 #     'unitVolume',
 #     'acceleratorPosition',
