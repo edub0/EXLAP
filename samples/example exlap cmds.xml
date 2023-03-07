@@ -139,7 +139,7 @@
 </Req>
 
 
-<!-- 718 GT4 Url options-->
+<!-- 718 GT4 Url options from the /Dir command-->
 
 <Rsp id="102">
     <UrlList>
@@ -286,7 +286,7 @@
 
 
 
-From output of
+From output of Dir command, a response with avaliable url's to subscribe to is sent
 
 <Req id="102">
     <Dir/>
@@ -302,12 +302,3 @@ response will be
       <Match url="System_Language"/>
 </UrlList>
 </Rsp>
-
-
-
-
-<Req id="139">
-    <Subscribe url="engineSpeed" ival="100" timeStamp="true" />
-</Req>
-
-<Match url="engineSpeed"/>

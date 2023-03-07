@@ -1,5 +1,9 @@
 2021 Porsche 718 GT4
 
+Meta information about a exlap session in which all possible url were subscribed.
+Resulting data and url events sent is below. For data logging (race track) purposes,
+more interesting data sets were commented on.
+
 File
 exlap_all_Subscriptions_GT4.pcapng
 
@@ -165,6 +169,8 @@ Subscribed to 139 sources:
         cmd.Sub_System_Language()
 
 Sources producing data 
+Column 1 is number of events sent
+Column 2 is exlap url subscribed to
 
 Interesting to data log
 
