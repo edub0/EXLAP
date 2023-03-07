@@ -14,7 +14,7 @@ executing==1.2.0
 frozenlist==1.3.3
 generateDS==2.41.1
 idna==3.4
-ipython==8.8.0
+ipython==8.10.0
 jedi==0.18.2
 lxml==4.9.2
 matplotlib-inline==0.1.6
