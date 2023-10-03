@@ -31,7 +31,7 @@ requests==2.31.0
 six==1.16.0
 stack-data==0.6.2
 traitlets==5.8.1
-urllib3==1.26.13
+urllib3==1.26.17
 wcwidth==0.2.6
 websocket-client==1.4.2
 xmlschema==2.1.1
