@@ -1,2 +1,6 @@
 scripts/.DS_Store
 .DS_Store
+.build
+.config
+.venv
+*.code-workspace
