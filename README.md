@@ -65,11 +65,17 @@ using https://www.davekuhlman.org/generateDS.html
 
 
 Main files of interest:
+
 exlap_cmds.py - contains function for exlap commands and auth
+
 exlap_v2.py - DSgenerate of exlap xml schema into python objects
+
 exlapv2_subs.py - flexible python function for exlap cmd
+
 main.py - connects to exlap server and issue commands
+
 streams.py - patch for asyncio python streams
+
 
 
 ## Project Folder Structure
