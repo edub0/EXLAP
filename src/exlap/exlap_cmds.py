@@ -1963,7 +1963,17 @@ def Sub_ambienceLight_profiles():
 
 def Sub_tyrePressures():
     """
-    capability to be determined
+    Update Rate: as needed
+    Provides TPMS tire pressures and unit of measure
+
+    <Dat timeStamp="2000-01-31T13:14:08.449000-7:00" url="tyrePressures">
+    <Abs name="pressureFrontLeft" val="21"/>
+    <Abs name="pressureFrontRight" val="21"/>
+    <Abs name="pressureRearLeft" val="22"/>
+    <Abs name="pressureRearRight" val="22"/>
+    <Abs name="pressureSpareWheel" val="32768"/>
+    <Enm name="pressureUnit" val="bar"/>
+    </Dat>
     """
     message = api.Req()
     conn_count()
